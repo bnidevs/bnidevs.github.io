@@ -91,17 +91,11 @@ var validate = (e) => {
     	}
     }
 
+    div_insert.innerHTML = '<input type="text" id="curr"><br>';
+
     accepted_words = possible_answers;
 
-    div_insert.innerHTML += "<br>"
-
     accepted_words.forEach(w => {div_insert.innerHTML += w + "<br>"});
-
-    document.getElementById("curr").value = text;
-
-    document.getElementById("curr").removeAttribute("id");
-
-    div_insert.innerHTML += '<input type="text" id="curr">';
 
     document.getElementById("curr").addEventListener("keydown", function (e) {
 	    if (e.code === "Enter") {
