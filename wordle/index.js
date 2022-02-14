@@ -67,7 +67,10 @@ var satisfy = (w) => {
 
 var validate = (e) => {
     let text = e.target.value;
-    let spli = text.split(",");
+    let spli = [];
+    for(let i = 0; i < 10; i += 2){
+    	spli.push(text.substr(i,i+2));
+    }
 
     // ~ = right letter, wrong spot
     // - = wrong letter
