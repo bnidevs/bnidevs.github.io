@@ -8,9 +8,11 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 	<body>
-		<input type="text" name="repolink" id="inputrepolink" placeholder="GitHub Repo Link">
-		<input type="text" name="email" id="inputemail" placeholder="Email">
-		<button id="trigger">Go</button><br>
+		<form onsubmit="event.preventDefault(); return main();">
+			<input type="text" name="repolink" id="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on">
+			<input type="text" name="email" id="inputemail" placeholder="Email">
+			<input type="submit" id="trigger"></input><br>
+		</form>
 		<div id="errormsg">
 			check your inputs
 		</div><br>

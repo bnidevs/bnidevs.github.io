@@ -1,4 +1,4 @@
-document.getElementById("trigger").addEventListener("click", ()=>{
+var main = () => {
 	try {
 		document.getElementById("errormsg").style.color = "transparent";
 
@@ -40,8 +40,11 @@ document.getElementById("trigger").addEventListener("click", ()=>{
 				});
 		}
 
+		return true;
 	}catch (error){
 		console.log(error);
 		document.getElementById("errormsg").style.color = "red";
+
+		return false;
 	}
-});
+}
