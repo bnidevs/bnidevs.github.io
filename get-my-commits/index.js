@@ -10,17 +10,38 @@ document.getElementById("trigger").addEventListener("click", ()=>{
 			repo = repo.substring(0, repo.length - 1);
 		}
 
+		var commitlinks = [];
+
 		// request format:
 		// https://api.github.com/repos/bnidevs/ButtonParty/commits?author=bill.8ni@gmail.com
 
-		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?" + document.getElementById("inputemail").value)
+		var k = 0;
+		var lastsha = null;
+
+		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value + "&per_page=100")
 			.then(resp => resp.json())
 			.then(data => {
+				k = data.length;
 				for(var i = 0; i < data.length; i++){
-					document.getElementById("commitlinks").innerHTML += data[i]["html_url"] + "<br>";
+					document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
 				}
+				lastsha = data[data.length - 1]["sha"];
 			});
+
+		while(k > 1){
+			fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value + "&per_page=100&sha=" + lastsha)
+				.then(resp => resp.json())
+				.then(data => {
+					k = data.length;
+					for(var i = 0; i < data.length; i++){
+						document.getElementById("commitlinks").innerHTML += data[i]["html_url"] + "<br>"
+					}
+					lastsha = data[data.length - 1]["sha"];
+				});
+		}
+
 	}catch (error){
+		console.log(error);
 		document.getElementById("errormsg").style.color = "red";
 	}
 });
