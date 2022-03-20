@@ -24,6 +24,14 @@ document.getElementById("download").addEventListener("click", () => {
 
 var main = () => {
 	try {
+		document.getElementById("loadinggif").style.display = "block";
+
+		document.getElementById("copylinks").style.display = "none";
+
+		document.getElementById("download").style.display = "none";
+
+		document.getElementById("commitlinks").innerHTML = "";
+
 		document.getElementById("errormsg").style.color = "transparent";
 
 		var repolink = document.getElementById("inputrepolink").value;
@@ -36,40 +44,70 @@ var main = () => {
 			repo = repo.substring(0, repo.length - 1);
 		}
 
-		var commitlinks = [];
+		var commitlinks = {};
 
 		// request format:
 		// https://api.github.com/repos/bnidevs/ButtonParty/commits?author=bill.8ni@gmail.com
 
-		var k = 0;
-		var lastsha = null;
-
-		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value + "&per_page=100")
-			.then(resp => resp.json())
-			.then(data => {
-				k = data.length;
-				for(var i = 0; i < data.length; i++){
-					document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
-				}
-				lastsha = data[data.length - 1]["sha"];
-				name = data[0]["commit"]["author"]["name"];
+		var getcommitlinks = async (branchlatest) => {
+			var k = 100;
+			var ctr = 0;
+			var sha = "";
+			var latestsha = await fetch(branchlatest)
+				.then(response => response.json())
+				.then(leaf => {
+					name = leaf["commit"]["author"]["name"];
+					return leaf["sha"];
 			});
-
-		while(k > 1){
-			fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value + "&per_page=100&sha=" + lastsha)
-				.then(resp => resp.json())
-				.then(data => {
-					k = data.length;
-					for(var i = 0; i < data.length; i++){
-						document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
-					}
-					lastsha = data[data.length - 1]["sha"];
-				});
+			var lastsha = latestsha;
+			while(k > 1){
+				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value + "&per_page=100&sha=" + lastsha)
+					.then(resp => resp.json())
+					.then(data => {
+						k = data.length;
+						for(var i = 0; i < data.length; i++){
+							commitlinks[data[i]["html_url"]] = data[i]["commit"]["author"]["date"];
+							// document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
+						}
+						return data[data.length - 1]["sha"];
+					});
+			}
 		}
 
-		document.getElementById("copylinks").style.display = "block";
+		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/branches")
+			.then(response => response.json())
+			.then(branches => {
+				var rtrn = [];
+				for(var i = 0; i < branches.length; i++){
+					rtrn.push(branches[i]["commit"]["url"]);
+				}
+				return rtrn;
+			}).then(branchurls => {
+				Promise
+					.all(branchurls.map(getcommitlinks))
+					.then(() => {
 
-		document.getElementById("download").style.display = "block";
+						var alllinks = Object.keys(commitlinks);
+
+						alllinks.sort(function(a, b) {
+						  var keyA = new Date(commitlinks[a]),
+						    keyB = new Date(commitlinks[b]);
+						  if (keyA < keyB) return -1;
+						  if (keyA > keyB) return 1;
+						  return 0;
+						});
+
+						for(var i = 0; i < alllinks.length; i++){
+							document.getElementById("commitlinks").innerHTML += '<a href="' + alllinks[i] + '">' + alllinks[i] + "</a>" + "<br>";
+						}
+
+						document.getElementById("copylinks").style.display = "block";
+
+						document.getElementById("download").style.display = "block";
+
+						document.getElementById("loadinggif").style.display = "none";
+					});
+			});
 
 		return true;
 	}catch (error){
