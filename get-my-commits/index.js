@@ -1,3 +1,7 @@
+document.getElementById("copylinks").addEventListener("click", () => {
+	navigator.clipboard.writeText(document.getElementById("commitlinks").innerText);
+});
+
 var main = () => {
 	try {
 		document.getElementById("errormsg").style.color = "transparent";
@@ -34,11 +38,13 @@ var main = () => {
 				.then(data => {
 					k = data.length;
 					for(var i = 0; i < data.length; i++){
-						document.getElementById("commitlinks").innerHTML += data[i]["html_url"] + "<br>"
+						document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
 					}
 					lastsha = data[data.length - 1]["sha"];
 				});
 		}
+
+		document.getElementById("copylinks").style.display = "block";
 
 		return true;
 	}catch (error){

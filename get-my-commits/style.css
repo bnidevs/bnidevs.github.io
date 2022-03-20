@@ -2,3 +2,7 @@
 	color: transparent;
 	user-select: none;
 }
+
+#copylinks {
+	display: none;
+}
