@@ -83,8 +83,6 @@ var main = () => {
 						}
 						return data[data.length - 1]["sha"];
 					});
-
-					console.log(commitlinks);
 			}
 		}
 
