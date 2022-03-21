@@ -66,6 +66,9 @@ var main = () => {
 					.then(data => {
 						k = data.length;
 						for(var i = 0; i < data.length; i++){
+							if(data[i]["commit"]["author"]["date"] < "2022-01-01T00:00:00Z" || data[i]["html_url"] in commitlinks){
+								k = 0;
+							}
 							commitlinks[data[i]["html_url"]] = data[i]["commit"]["author"]["date"];
 							// document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
 						}
@@ -98,6 +101,9 @@ var main = () => {
 						});
 
 						for(var i = 0; i < alllinks.length; i++){
+							if(commitlinks[alllinks[i]] < "2022-01-01T00:00:00Z"){
+								break;
+							}
 							document.getElementById("commitlinks").innerHTML += '<a href="' + alllinks[i] + '">' + alllinks[i] + "</a>" + "<br>";
 						}
 
