@@ -83,6 +83,8 @@ var main = () => {
 						}
 						return data[data.length - 1]["sha"];
 					});
+
+					console.log(commitlinks);
 			}
 		}
 
@@ -99,6 +101,8 @@ var main = () => {
 					.all(branchurls.map(getcommitlinks))
 					.then(() => {
 
+						console.log(commitlinks);
+
 						var alllinks = Object.keys(commitlinks);
 
 						alllinks.sort(function(a, b) {
@@ -110,9 +114,6 @@ var main = () => {
 						});
 
 						for(var i = 0; i < alllinks.length; i++){
-							if(commitlinks[alllinks[i]] < "2022-01-01T00:00:00Z"){
-								break;
-							}
 							document.getElementById("commitlinks").innerHTML += '<a href="' + alllinks[i] + '">' + alllinks[i] + "</a>" + "<br>";
 						}
 
