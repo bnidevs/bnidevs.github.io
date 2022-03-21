@@ -55,8 +55,16 @@ var main = () => {
 			var sha = "";
 			var latestsha = await fetch(branchlatest)
 				.then(response => response.json())
-				.then(leaf => leaf["sha"]);
+				.then(leaf => {
+					if(leaf["commit"]["author"]["date"] < "2022-01-01T00:00:00Z"){
+						return null;
+					}
+					return leaf["sha"];
+				});
 			var lastsha = latestsha;
+			if (lastsha == null){
+				return;
+			}
 			while(k == 100){
 				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value + "&per_page=100&sha=" + lastsha + "&since=2022-01-01")
 					.then(resp => resp.json())
