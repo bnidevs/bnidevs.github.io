@@ -56,7 +56,6 @@ var main = () => {
 			var latestsha = await fetch(branchlatest)
 				.then(response => response.json())
 				.then(leaf => {
-					name = leaf["commit"]["author"]["name"];
 					return leaf["sha"];
 			});
 			var lastsha = latestsha;
@@ -70,6 +69,7 @@ var main = () => {
 								k = 0;
 							}
 							commitlinks[data[i]["html_url"]] = data[i]["commit"]["author"]["date"];
+							name = data[i]["commit"]["author"]["name"];
 							// document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
 						}
 						return data[data.length - 1]["sha"];
