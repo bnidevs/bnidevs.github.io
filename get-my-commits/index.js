@@ -100,7 +100,7 @@ var main = () => {
 			}
 		}
 
-		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/branches", {
+		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/branches?per_page=100", {
 			method: "GET",
 			headers: headerobj
 		})
