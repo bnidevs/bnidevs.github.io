@@ -9,8 +9,13 @@
 </head>
 	<body>
 		<form onsubmit="event.preventDefault(); return main();">
-			<input type="text" name="repolink" id="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on">
-			<input type="text" name="email" id="inputemail" placeholder="Email">
+			<input type="text" name="repolink" id="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on"><br><br>
+			<input type="text" name="email" id="inputemail" placeholder="Email"><br><br>
+			<input type="password" name="patoken" id="inputtoken" placeholder="Personal Access Token" autocomplete="off"> (optional)
+			<p class="note">
+				The personal access token is optional but your request may fail if your repository has more than 20 branches. Providing your personal access token increases the API rate limit to 5000 requests per hour, which should handle repos of all sizes. <br>See <a href="https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api#authentication">this doc page</a>.<br><br>
+				This <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">doc</a> will help with getting a personal access token.
+			</p>
 			<input type="submit" id="trigger"></input><br>
 		</form>
 		<div id="errormsg">

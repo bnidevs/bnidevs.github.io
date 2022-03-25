@@ -34,9 +34,17 @@ var main = () => {
 
 		document.getElementById("errormsg").style.color = "transparent";
 
-		var repolink = document.getElementById("inputrepolink").value;
+		var repolink = document.getElementById("inputrepolink").value.trim();
 		let owner = repolink.substring(repolink.indexOf("github.com") + 11, repolink.indexOf("/", repolink.indexOf("github.com") + 11));
 		let repo = repolink.substring(repolink.indexOf(owner) + owner.length + 1);
+
+		let token = document.getElementById("inputtoken").value.trim();
+
+		let headerobj = {};
+
+		if(token.length == 40){
+			headerobj.Authorization = "token " + token
+		}
 
 		projname = repo;
 
@@ -53,7 +61,10 @@ var main = () => {
 			var k = 100;
 			var ctr = 0;
 			var sha = "";
-			var latestsha = await fetch(branchlatest)
+			var latestsha = await fetch(branchlatest, {
+				method: "GET",
+				headers: headerobj
+			})
 				.then(response => response.json())
 				.then(leaf => {
 					if(leaf["commit"]["author"]["date"] < "2022-01-01T00:00:00Z"){
@@ -66,7 +77,10 @@ var main = () => {
 				return;
 			}
 			while(k == 100){
-				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value + "&per_page=100&sha=" + lastsha + "&since=2022-01-01")
+				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value.trim() + "&per_page=100&sha=" + lastsha + "&since=2022-01-01", {
+					method: "GET",
+					headers: headerobj
+				})
 					.then(resp => resp.json())
 					.then(data => {
 						k = data.length;
@@ -86,7 +100,10 @@ var main = () => {
 			}
 		}
 
-		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/branches")
+		fetch("https://api.github.com/repos/" + owner + "/" + repo + "/branches", {
+			method: "GET",
+			headers: headerobj
+		})
 			.then(response => response.json())
 			.then(branches => {
 				var rtrn = [];
