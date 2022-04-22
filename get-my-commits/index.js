@@ -1,6 +1,8 @@
 var name = "";
 var projname = "";
 
+var FETCHSINCE = "2022-01-01T00:00:00Z";
+
 var download = (filename, text) => {
   var element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -67,7 +69,7 @@ var main = () => {
 			})
 				.then(response => response.json())
 				.then(leaf => {
-					if(leaf["commit"]["author"]["date"] < "2022-01-01T00:00:00Z"){
+					if(leaf["commit"]["author"]["date"] < FETCHSINCE){
 						return null;
 					}
 					return leaf["sha"];
@@ -77,7 +79,7 @@ var main = () => {
 				return;
 			}
 			while(k == 100){
-				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value.trim() + "&per_page=100&sha=" + lastsha + "&since=2022-01-01", {
+				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value.trim() + "&per_page=100&sha=" + lastsha + "&since=" + FETCHSINCE, {
 					method: "GET",
 					headers: headerobj
 				})
@@ -88,7 +90,7 @@ var main = () => {
 							return "";
 						}
 						for(var i = 0; i < data.length; i++){
-							if(data[i]["commit"]["author"]["date"] < "2022-01-01T00:00:00Z" || data[i]["html_url"] in commitlinks){
+							if(data[i]["commit"]["author"]["date"] < FETCHSINCE || data[i]["html_url"] in commitlinks){
 								k = 0;
 							}
 							commitlinks[data[i]["html_url"]] = data[i]["commit"]["author"]["date"];
