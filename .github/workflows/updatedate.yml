@@ -14,9 +14,19 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Get Today
-      - run: |
+        run: |
           today=$(date +'%Y-%m-%dT00:00:00Z')
           echo $today
       
       - name: Replace Date
-      - run: sed -i "s|FETCHSINCE \= \".*\"|FETCHSINCE \= \"$today\"|g" ./get-my-commits/index.js
+        run: sed -i "s|FETCHSINCE \= \".*\"|FETCHSINCE \= \"$today\"|g" ./get-my-commits/index.js
+        
+      - name: Git Config
+        run: |
+          git config --global user.name 'Bill Ni'
+          git config --global user.email 'bill.8ni@gmail.com'
+          
+      - name: Push Changes
+        run: |
+          git commit -am "updated date"
+          git push
