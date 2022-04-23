@@ -1,10 +1,10 @@
 name: Update Get-My-Commits Fetch Date
 
-on: [push]
-#   schedule:
-#     - cron: "0 0 1 1 *"
-#     - cron: "0 0 20 5 *"
-#     - cron: "0 0 20 8 *"
+on:
+  schedule:
+    - cron: "0 0 1 1 *"
+    - cron: "0 0 20 5 *"
+    - cron: "0 0 20 8 *"
 
 jobs:
   update:
@@ -19,7 +19,7 @@ jobs:
           echo $today
       
       - name: Replace Date
-        run: sed -i "s|FETCHSINCE \= \".*\"|FETCHSINCE \= \"2022-01-02T00:00:00Z\"|g" ./get-my-commits/index.js
+        run: sed -i "s|FETCHSINCE \= \".*\"|FETCHSINCE \= \"$today\"|g" ./get-my-commits/index.js
         
       - name: Git Config
         run: |
