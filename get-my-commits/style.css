@@ -15,6 +15,10 @@
 	display: none;
 }
 
+#commitlinks {
+	font-family: monospace;
+}
+
 .note {
 	width: 40vw;
 }
