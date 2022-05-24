@@ -22,3 +22,7 @@
 .note {
 	width: 40vw;
 }
+
+.warning {
+	color: red;
+}
