@@ -13,13 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Get Today
+      - name: Get Today + Replace Date
         run: |
           today=$(date +'%Y-%m-%dT00:00:00Z')
           echo $today
-      
-      - name: Replace Date
-        run: sed -i "s|FETCHSINCE \= \".*\"|FETCHSINCE \= \"$today\"|g" ./get-my-commits/index.js
+          sed -i "s|FETCHSINCE \= \".*\"|FETCHSINCE \= \"$today\"|g" ./get-my-commits/index.js
         
       - name: Git Config
         run: |
