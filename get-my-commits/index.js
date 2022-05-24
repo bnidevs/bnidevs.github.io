@@ -1,7 +1,7 @@
 var name = "";
 var projname = "";
 
-var FETCHSINCE = "";
+var FETCHSINCE = "2022-05-20T00:00:00Z";
 
 var download = (filename, text) => {
   var element = document.createElement('a');
