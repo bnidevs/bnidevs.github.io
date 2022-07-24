@@ -26,3 +26,7 @@
 .warning {
 	color: red;
 }
+
+.flex {
+	display: flex;
+}
