@@ -79,7 +79,7 @@ var main = () => {
 				return;
 			}
 			while(k == 100){
-				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + document.getElementById("inputemail").value.trim() + "&per_page=100&sha=" + lastsha + "&since=" + FETCHSINCE, {
+				lastsha = await fetch("https://api.github.com/repos/" + owner + "/" + repo + "/commits?author=" + encodeURIComponent(document.getElementById("inputemail").value.trim()) + "&per_page=100&sha=" + lastsha + "&since=" + FETCHSINCE, {
 					method: "GET",
 					headers: headerobj
 				})
