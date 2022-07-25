@@ -129,8 +129,7 @@ var main = () => {
               }
               commitlinks[data[i]["html_url"]] =
                 data[i]["commit"]["author"]["date"];
-              statslinks[data[i]["url"]] = 
-                data[i]["html_url"];
+              statslinks[data[i]["url"]] = data[i]["html_url"];
               name = data[i]["commit"]["author"]["name"];
               // document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
             }
@@ -144,11 +143,11 @@ var main = () => {
         method: "GET",
         headers: headerobj,
       })
-      .then(resp => resp.json())
-      .then(data => {
-        stats[statslinks[commitlink]] = data.stats;
-      });
-    }
+        .then((resp) => resp.json())
+        .then((data) => {
+          stats[statslinks[commitlink]] = data.stats;
+        });
+    };
 
     var display = (runstats = false) => {
       var alllinks = Object.keys(commitlinks);
@@ -164,7 +163,19 @@ var main = () => {
       for (var i = 0; i < alllinks.length; i++) {
         console.log(stats[alllinks[i]]);
         document.getElementById("commitlinks").innerHTML +=
-          '<div class="flex"><a href="' + alllinks[i] + '">' + alllinks[i] + "</a>" + (runstats ? '<div class="add">&nbsp;+' + stats[alllinks[i]].additions + '</div><div class="del">&nbsp;-' + stats[alllinks[i]].deletions + '</div>' : "") + "</div><br>";
+          '<div class="flex"><a href="' +
+          alllinks[i] +
+          '">' +
+          alllinks[i] +
+          "</a>" +
+          (runstats
+            ? '<div class="add">&nbsp;+' +
+              stats[alllinks[i]].additions +
+              '</div><div class="del">&nbsp;-' +
+              stats[alllinks[i]].deletions +
+              "</div>"
+            : "") +
+          "</div><br>";
       }
 
       document.getElementById("copylinks").style.display = "block";
@@ -172,7 +183,7 @@ var main = () => {
       document.getElementById("download").style.display = "block";
 
       document.getElementById("loadinggif").style.display = "none";
-    }
+    };
 
     fetch(
       "https://api.github.com/repos/" +
@@ -197,13 +208,15 @@ var main = () => {
         Promise.all(branchurls.map(getcommitlinks)).then(() => {
           console.log(commitlinks);
 
-          if(document.getElementById("statscheckbox").checked){
-            Promise.all(Object.keys(statslinks).map(getstats)).then(() => {
-              console.log(stats);
-            }).then(() => display(true));
-            
+          if (document.getElementById("statscheckbox").checked) {
+            Promise.all(Object.keys(statslinks).map(getstats))
+              .then(() => {
+                console.log(stats);
+              })
+              .then(() => display(true));
+
             return true;
-          }else{
+          } else {
             display();
           }
         });
