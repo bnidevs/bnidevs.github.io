@@ -1,4 +1,4 @@
-# bnidevs.github.io
+# [bnidevs.github.io](https://bnidevs.github.io)
 Random Static Hosting
 
 - [Soda Rankings](https://bnidevs.github.io/sodas)
