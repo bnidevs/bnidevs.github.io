@@ -7,7 +7,7 @@ const GRID_HEIGHT = 5;
 
 let BPM = 120;
 //ms per beat
-const BEAT_MULTIPLIER = 1/(BPM/60/1000);
+let BEAT_MULTIPLIER = 1/(BPM/60/1000);
 
 //the class used for when a key button is in assigning mode
 const ASSIGNING_CLASS = "assigning";
@@ -36,6 +36,11 @@ $(function() {
 	
 	//if true, currently assigning the pending sound to a cell
 	var assigning = false;
+
+	document.getElementById("bpmInput").addEventListener('change', (e) => {
+		BPM = e.target.value;
+		BEAT_MULTIPLIER = 1/(BPM/60/1000);
+	});
 	
 	//called when a cell is clicked
 	function handleGrid(event, id) {
