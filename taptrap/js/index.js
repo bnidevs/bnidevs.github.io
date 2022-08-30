@@ -34,7 +34,7 @@ $(function () {
   //if true, currently assigning the pending sound to a cell
   var assigning = false;
 
-  document.getElementById("bpmInput").addEventListener("change", (e) => {
+  document.getElementById("bpm").addEventListener("change", (e) => {
     BPM = e.target.value;
     BEAT_MULTIPLIER = 1 / (BPM / 60 / 1000);
   });
