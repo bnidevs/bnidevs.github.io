@@ -3,6 +3,10 @@ var projname = "";
 
 var FETCHSINCE = "2022-08-20T00:00:00Z";
 
+let commitlinks = {};
+let statslinks = {};
+let stats = {};
+
 var download = (filename, text) => {
   var element = document.createElement("a");
   element.setAttribute(
@@ -21,7 +25,7 @@ var download = (filename, text) => {
 
 document.getElementById("copylinks").addEventListener("click", () => {
   navigator.clipboard.writeText(
-    document.getElementById("commitlinks").innerText
+    Object.keys(commitlinks).reverse().join("\n")
   );
 });
 
@@ -32,7 +36,7 @@ document.getElementById("download").addEventListener("click", () => {
       (name.length == 0 ? "" : "\n") +
       projname +
       "\n\nCommits:\n" +
-      document.getElementById("commitlinks").innerText
+      Object.keys(commitlinks).reverse().join("\n")
   );
 });
 
@@ -68,10 +72,6 @@ var main = () => {
     if (repo.charAt(repo.length - 1) == "/") {
       repo = repo.substring(0, repo.length - 1);
     }
-
-    let commitlinks = {};
-    let statslinks = {};
-    let stats = {};
 
     // request format:
     // https://api.github.com/repos/bnidevs/ButtonParty/commits?author=bill.8ni@gmail.com
@@ -163,19 +163,22 @@ var main = () => {
       for (var i = 0; i < alllinks.length; i++) {
         console.log(stats[alllinks[i]]);
         document.getElementById("commitlinks").innerHTML +=
-          '<div class="flex"><a href="' +
+          '<tr><td><a href="' +
           alllinks[i] +
           '">' +
           alllinks[i] +
-          "</a>" +
+          "</a></td>" +
           (runstats
-            ? '<div class="add">&nbsp;+' +
+            ? '<td class="add">&nbsp;+' +
               stats[alllinks[i]].additions +
-              '</div><div class="del">&nbsp;-' +
+              '</td><td class="del">&nbsp;-' +
               stats[alllinks[i]].deletions +
-              "</div>"
+              "</td>"
             : "") +
-          "</div><br>";
+          "<td>" +
+          new Date(commitlinks[alllinks[i]]).toDateString().substring(4) +
+          "</td>" +
+          "</tr>";
       }
 
       document.getElementById("copylinks").style.display = "block";
