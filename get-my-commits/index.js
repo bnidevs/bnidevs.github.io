@@ -181,7 +181,7 @@ var main = () => {
           "</tr>";
       }
 
-      for (var i = 0; i < alllinks.length; i++){
+      for (var i = 0; i < alllinks.length; i++) {
         heatmap_data[new Date(commitlinks[alllinks[i]]).getTime() / 1000] = 1;
       }
 
