@@ -26,9 +26,7 @@ var download = (filename, text) => {
 };
 
 document.getElementById("copylinks").addEventListener("click", () => {
-  navigator.clipboard.writeText(
-    Object.keys(commitlinks).reverse().join("\n")
-  );
+  navigator.clipboard.writeText(Object.keys(commitlinks).reverse().join("\n"));
 });
 
 document.getElementById("download").addEventListener("click", () => {
