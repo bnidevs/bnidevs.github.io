@@ -196,14 +196,14 @@ var main = () => {
         cellSize: 20,
         weekStartOnMonday: false,
         data: heatmap_data,
-        legend: [1,2,4,8,16],
+        legend: [1, 2, 4, 8, 16],
         highlight: "now",
         tooltip: true,
         considerMissingDataAsZero: true,
         legendColors: {
           min: "#fff",
-          max: "#000"
-        }
+          max: "#000",
+        },
       });
 
       document.getElementById("copylinks").style.display = "block";
