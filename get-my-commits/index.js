@@ -191,8 +191,19 @@ var main = () => {
         range: 5,
         domain: "month",
         subDomain: "day",
+        subDomainTextFormat: "%d",
+        cellRadius: 2,
+        cellSize: 20,
         weekStartOnMonday: false,
-        data: heatmap_data
+        data: heatmap_data,
+        legend: [1,2,4,8,16],
+        highlight: "now",
+        tooltip: true,
+        considerMissingDataAsZero: true,
+        legendColors: {
+          min: "#fff",
+          max: "#000"
+        }
       });
 
       document.getElementById("copylinks").style.display = "block";
