@@ -7,6 +7,8 @@ let commitlinks = {};
 let statslinks = {};
 let stats = {};
 
+let heatmap_data = {};
+
 var download = (filename, text) => {
   var element = document.createElement("a");
   element.setAttribute(
@@ -180,6 +182,20 @@ var main = () => {
           "</td>" +
           "</tr>";
       }
+
+      for (var i = 0; i < alllinks.length; i++){
+        heatmap_data[new Date(commitlinks[alllinks[i]]).getTime() / 1000] = 1;
+      }
+
+      var cal = new CalHeatMap();
+      cal.init({
+        start: new Date(FETCHSINCE),
+        range: 5,
+        domain: "month",
+        subDomain: "day",
+        weekStartOnMonday: false,
+        data: heatmap_data
+      });
 
       document.getElementById("copylinks").style.display = "block";
 
