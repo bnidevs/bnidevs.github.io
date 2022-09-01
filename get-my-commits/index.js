@@ -203,8 +203,8 @@ var main = () => {
         legend: [1,2,4,8,16],
         legendColors: {
           min: "#fff",
-          max: "#000"
-        }
+          max: "#000",
+        },
       });
 
       document.getElementById("copylinks").style.display = "block";
