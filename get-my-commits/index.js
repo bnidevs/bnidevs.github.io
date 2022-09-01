@@ -200,7 +200,7 @@ var main = () => {
         tooltip: true,
         considerMissingDataAsZero: true,
         displayLegend: false,
-        legend: [1,2,4,8,16],
+        legend: [1, 2, 4, 8, 16],
         legendColors: {
           min: "#fff",
           max: "#000",
