@@ -1,0 +1,9 @@
+body {
+    padding: 1%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+#main {
+    width: 90vw;
+    height: 50vw;
+}
