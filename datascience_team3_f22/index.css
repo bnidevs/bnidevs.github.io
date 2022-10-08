@@ -7,3 +7,10 @@ body {
     width: 90vw;
     height: 50vw;
 }
+
+#tooltip_text {
+    color: black;
+    font-size: 1em;
+    z-index: 5;
+    position: relative;
+}
