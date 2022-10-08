@@ -16,22 +16,23 @@ const colorScale = d3
   .range(d3.schemeBlues[7]);
 
 let optionmap = {
-  "popdensity": popdensity,
-  "population": population
-}
+  popdensity: popdensity,
+  population: population,
+};
 
 let optionname = {
-  "popdensity": "Population Density",
-  "population": "Population"
-}
+  popdensity: "Population Density",
+  population: "Population",
+};
 
 let optionunit = {
-  "popdensity": "(people per sq km)",
-  "population": "(millions)"
-}
+  popdensity: "(people per sq km)",
+  population: "(millions)",
+};
 
-let tooltip = d3.select('#tooltip');
-let tooltip_bg = d3.select('#tooltip_bg')
+let tooltip = d3.select("#tooltip");
+let tooltip_bg = d3
+  .select("#tooltip_bg")
   .attr("fill", "#FFF")
   .attr("height", "3em")
   .style("stroke", "black")
@@ -72,33 +73,29 @@ Promise.all([
     };
 
     let mouseMove = function (event, d) {
-      const country_name = d3.select('#country_name');
-      country_name.text(
-        `${d.properties.name}`
-      );
-  
-      const country_data = d3.select('#country_data');
+      const country_name = d3.select("#country_name");
+      country_name.text(`${d.properties.name}`);
+
+      const country_data = d3.select("#country_data");
       country_data.text(
         `${optionname[whichdata]}: ${d.total} ${optionunit[whichdata]}`
       );
-  
+
       const [x, y] = d3.pointer(event);
-      tooltip.attr('transform', `translate(${x},${y + 40})`);
-      tooltip_bg.attr("width", 
+      tooltip.attr("transform", `translate(${x},${y + 40})`);
+      tooltip_bg.attr(
+        "width",
         Math.max(
-          d3.select('#country_data').node().getBBox().width, 
-          d3.select('#country_name').node().getBBox().width
+          d3.select("#country_data").node().getBBox().width,
+          d3.select("#country_name").node().getBBox().width
         )
       );
-  
+
       tooltip.style("opacity", 1);
       tooltip_bg.style("opacity", 1);
     };
 
-    svg
-    .select("#plotg")
-    .selectAll("path")
-    .remove();
+    svg.select("#plotg").selectAll("path").remove();
 
     svg
       .select("#plotg")
@@ -137,22 +134,21 @@ Promise.all([
   };
 
   let mouseMove = function (event, d) {
-    const country_name = d3.select('#country_name');
-    country_name.text(
-      `${d.properties.name}`
-    );
+    const country_name = d3.select("#country_name");
+    country_name.text(`${d.properties.name}`);
 
-    const country_data = d3.select('#country_data');
+    const country_data = d3.select("#country_data");
     country_data.text(
       `${optionname[whichdata]}: ${d.total} ${optionunit[whichdata]}`
     );
 
     const [x, y] = d3.pointer(event);
-    tooltip.attr('transform', `translate(${x},${y + 40})`);
-    tooltip_bg.attr("width", 
+    tooltip.attr("transform", `translate(${x},${y + 40})`);
+    tooltip_bg.attr(
+      "width",
       Math.max(
-        d3.select('#country_data').node().getBBox().width, 
-        d3.select('#country_name').node().getBBox().width
+        d3.select("#country_data").node().getBBox().width,
+        d3.select("#country_name").node().getBBox().width
       )
     );
 
