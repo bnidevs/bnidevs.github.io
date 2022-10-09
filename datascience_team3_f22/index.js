@@ -70,6 +70,8 @@ Promise.all([
 
     let mouseLeave = function (d) {
       d3.selectAll(".Country").transition().duration(200).style("opacity", 0.8);
+      tooltip.style("opacity", 0);
+      tooltip_bg.style("opacity", 0);
     };
 
     let mouseMove = function (event, d) {
@@ -131,6 +133,8 @@ Promise.all([
 
   let mouseLeave = function (d) {
     d3.selectAll(".Country").transition().duration(200).style("opacity", 0.8);
+    tooltip.style("opacity", 0);
+    tooltip_bg.style("opacity", 0);
   };
 
   let mouseMove = function (event, d) {
