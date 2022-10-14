@@ -1,4 +1,4 @@
-var name = "";
+var personname = "";
 var projname = "";
 
 var FETCHSINCE = "2022-08-20T00:00:00Z";
@@ -8,6 +8,17 @@ let statslinks = {};
 let stats = {};
 
 let heatmap_data = {};
+
+var reset = () => {
+  commitlinks = {};
+  statslinks = {};
+  stats = {};
+  
+  heatmap_data = {};
+
+  personname = "";
+  projname = "";
+};
 
 var download = (filename, text) => {
   var element = document.createElement("a");
@@ -32,8 +43,8 @@ document.getElementById("copylinks").addEventListener("click", () => {
 document.getElementById("download").addEventListener("click", () => {
   download(
     "contributions.txt",
-    name +
-      (name.length == 0 ? "" : "\n") +
+    personname +
+      (personname.length == 0 ? "" : "\n") +
       projname +
       "\n\nCommits:\n" +
       Object.keys(commitlinks).reverse().join("\n")
@@ -49,8 +60,11 @@ var main = () => {
     document.getElementById("download").style.display = "none";
 
     document.getElementById("commitlinks").innerHTML = "";
+    document.getElementById("cal-heatmap").innerHTML = "";
 
     document.getElementById("errormsg").style.color = "transparent";
+
+    reset();
 
     var repolink = document.getElementById("inputrepolink").value.trim();
     let owner = repolink.substring(
@@ -130,7 +144,7 @@ var main = () => {
               commitlinks[data[i]["html_url"]] =
                 data[i]["commit"]["author"]["date"];
               statslinks[data[i]["url"]] = data[i]["html_url"];
-              name = data[i]["commit"]["author"]["name"];
+              personname = data[i]["commit"]["author"]["name"];
               // document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
             }
             return data[data.length - 1]["sha"];
