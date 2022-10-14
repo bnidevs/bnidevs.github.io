@@ -13,7 +13,7 @@ var reset = () => {
   commitlinks = {};
   statslinks = {};
   stats = {};
-  
+
   heatmap_data = {};
 
   personname = "";
