@@ -153,6 +153,10 @@ var main = () => {
     };
 
     var getstats = async (commitlink) => {
+      const ignore = [
+        "package-lock.json"
+      ];
+
       await fetch(commitlink, {
         method: "GET",
         headers: headerobj,
@@ -160,6 +164,15 @@ var main = () => {
         .then((resp) => resp.json())
         .then((data) => {
           stats[statslinks[commitlink]] = data.stats;
+
+          for(let f = 0; f < data.files.length; f++){
+            for(let ig = 0; ig < ignore.length; ig++){
+              if(data.files[f].filename.includes(ignore[ig])){
+                stats[statslinks[commitlink]].additions -= data.files[f].additions;
+                stats[statslinks[commitlink]].deletions -= data.files[f].deletions;
+              }
+            }
+          }
         });
     };
 
