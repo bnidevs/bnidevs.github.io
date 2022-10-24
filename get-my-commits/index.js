@@ -153,7 +153,7 @@ var main = () => {
     };
 
     var getstats = async (commitlink) => {
-      const ignore = ["package-lock.json"];
+      const ignore = ["package-lock.json", ".xcodeproj"];
 
       await fetch(commitlink, {
         method: "GET",
