@@ -153,9 +153,7 @@ var main = () => {
     };
 
     var getstats = async (commitlink) => {
-      const ignore = [
-        "package-lock.json"
-      ];
+      const ignore = ["package-lock.json"];
 
       await fetch(commitlink, {
         method: "GET",
@@ -165,11 +163,13 @@ var main = () => {
         .then((data) => {
           stats[statslinks[commitlink]] = data.stats;
 
-          for(let f = 0; f < data.files.length; f++){
-            for(let ig = 0; ig < ignore.length; ig++){
-              if(data.files[f].filename.includes(ignore[ig])){
-                stats[statslinks[commitlink]].additions -= data.files[f].additions;
-                stats[statslinks[commitlink]].deletions -= data.files[f].deletions;
+          for (let f = 0; f < data.files.length; f++) {
+            for (let ig = 0; ig < ignore.length; ig++) {
+              if (data.files[f].filename.includes(ignore[ig])) {
+                stats[statslinks[commitlink]].additions -=
+                  data.files[f].additions;
+                stats[statslinks[commitlink]].deletions -=
+                  data.files[f].deletions;
               }
             }
           }
