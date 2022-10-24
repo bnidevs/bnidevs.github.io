@@ -18,13 +18,17 @@
 			<div class="flex"><input type="password" name="patoken" id="inputtoken" placeholder="Personal Access Token" autocomplete="off" size="30"> &nbsp; (optional) &nbsp;<div class="flex"><button id="tokencheckbutton" type="button">Check token</button> &nbsp; <div id="tokenstatus"></div></div></div><br>
 			<input type="checkbox" name="commitstats" id="statscheckbox" value="Get" disabled="true"><label for="commitstats">&nbsp;get commit stats</label> [additions + subtractions; requires token]<br>
 			<p class="note">
-				The personal access token is optional but your request may fail if your repository has more than 20 branches. Providing your personal access token increases the API rate limit to 5000 requests per hour, which should handle repos of all sizes. <br>See <a href="https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api#authenticating">this doc page</a>.<br><br>
+				The personal access token is optional but your request may fail if your repository has more than 20 branches. <br>
+				Providing your personal access token increases the API rate limit to 5000 requests per hour, which should handle repos of all sizes. <br>
+				See <a href="https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api#authenticating">this doc page</a>.<br><br>
 
 				This <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">doc</a> will help with getting a personal access token.<br><br>
 
-				You can set up a new personal access token <a href="https://github.com/settings/tokens/new">here</a>. There is no need to include any additional permissions for a new token used here when presented the option.<br><br>
+				You can set up a new personal access token <a href="https://github.com/settings/tokens/new">here</a>. <br>
+				There is no need to include any additional permissions for a new token used here when presented the option.<br><br>
 				
-				<p class="warning note">We do NOT share or store your personal access token under any circumstances. You can verify this by viewing the source code <a href="https://github.com/bnidevs/bnidevs.github.io/tree/main/get-my-commits">here</a>.</p>
+				<p class="warning note">We do NOT share or store your personal access token under any circumstances. <br>
+				You can verify this by viewing the source code <a href="https://github.com/bnidevs/bnidevs.github.io/tree/main/get-my-commits">here</a>.</p>
 			</p>
 			<input type="submit" id="trigger"></input><br>
 		</form>
