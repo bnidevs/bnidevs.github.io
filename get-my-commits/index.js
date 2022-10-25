@@ -94,9 +94,9 @@ var main = () => {
     }
 
     if (document.getElementById("datecheckbox").checked) {
-      if (document.getElementById("datepicker").value === ""){
+      if (document.getElementById("datepicker").value === "") {
         datelimit = SEMESTER_START;
-      }else{
+      } else {
         datelimit = new Date(
           document.getElementById("datepicker").value + "T00:00:00Z"
         ).toISOString();
