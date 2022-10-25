@@ -2,7 +2,10 @@ var personname = "";
 var projname = "";
 
 var SEMESTER_START = "2022-08-20T00:00:00Z";
-document.getElementById("datepicker").defaultValue = SEMESTER_START.substring(0,10);
+document.getElementById("datepicker").defaultValue = SEMESTER_START.substring(
+  0,
+  10
+);
 
 var datelimit = SEMESTER_START;
 
@@ -90,8 +93,10 @@ var main = () => {
       repo = repo.substring(0, repo.length - 1);
     }
 
-    if (document.getElementById("datecheckbox").checked){
-      datelimit = new Date(document.getElementById("datepicker").value + "T00:00:00Z");
+    if (document.getElementById("datecheckbox").checked) {
+      datelimit = new Date(
+        document.getElementById("datepicker").value + "T00:00:00Z"
+      );
     }
 
     // request format:
@@ -228,7 +233,9 @@ var main = () => {
       var cal = new CalHeatMap();
       cal.init({
         start: new Date(datelimit),
-        range: Math.ceil(Math.abs(new Date() - new Date(datelimit)) / 2629800000),
+        range: Math.ceil(
+          Math.abs(new Date() - new Date(datelimit)) / 2629800000
+        ),
         domain: "month",
         subDomain: "day",
         subDomainTextFormat: "%d",
