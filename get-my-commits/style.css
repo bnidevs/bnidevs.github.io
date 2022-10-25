@@ -19,6 +19,10 @@
 	font-family: monospace;
 }
 
+#datepicker {
+	display: none;
+}
+
 .note {
 	width: 40vw;
 }

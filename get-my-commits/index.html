@@ -17,6 +17,8 @@
 			<input type="text" name="email" id="inputemail" placeholder="Email" size="60"><br><br>
 			<div class="flex"><input type="password" name="patoken" id="inputtoken" placeholder="Personal Access Token" autocomplete="off" size="30"> &nbsp; (optional) &nbsp;<div class="flex"><button id="tokencheckbutton" type="button">Check token</button> &nbsp; <div id="tokenstatus"></div></div></div><br>
 			<input type="checkbox" name="commitstats" id="statscheckbox" value="Get" disabled="true"><label for="commitstats">&nbsp;get commit stats</label> [additions + subtractions; requires token]<br>
+			<input type="checkbox" name="choosedate" id="datecheckbox" value="ChooseDate"><label for="choosedate">&nbsp;choose date</label><br>
+			<input type="date" name="date" id="datepicker"><br>
 			<p class="note">
 				The personal access token is optional but your request may fail if your repository has more than 20 branches. Providing your personal access token increases the API rate limit to 5000 requests per hour, which should handle repos of all sizes. <br>See <a href="https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api#authentication">this doc page</a>.<br><br>
 
@@ -46,4 +48,5 @@
 
 	<script type="text/javascript" src="index.js"></script>
 	<script type="text/javascript" src="tokencheck.js"></script>
+	<script type="text/javascript" src="datepicker.js"></script>
 </html>

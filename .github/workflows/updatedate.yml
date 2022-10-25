@@ -17,7 +17,7 @@ jobs:
         run: |
           today=$(date +'%Y-%m-%dT00:00:00Z')
           echo $today
-          sed -i "s|FETCHSINCE \= \".*\"|FETCHSINCE \= \"$today\"|g" ./get-my-commits/index.js
+          sed -i "s|SEMESTER_START \= \".*\"|SEMESTER_START \= \"$today\"|g" ./get-my-commits/index.js
         
       - name: Git Config
         run: |
