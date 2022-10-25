@@ -94,9 +94,13 @@ var main = () => {
     }
 
     if (document.getElementById("datecheckbox").checked) {
-      datelimit = new Date(
-        document.getElementById("datepicker").value + "T00:00:00Z"
-      );
+      if (document.getElementById("datepicker").value === ""){
+        datelimit = SEMESTER_START;
+      }else{
+        datelimit = new Date(
+          document.getElementById("datepicker").value + "T00:00:00Z"
+        ).toISOString();
+      }
     }
 
     // request format:
