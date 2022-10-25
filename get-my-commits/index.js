@@ -174,7 +174,7 @@ var main = () => {
         "contents.xcworkspacedata",
         "IDEWorkspaceChecks.plist",
         "Package.resolved",
-        "yarn.lock"
+        "yarn.lock",
       ];
 
       await fetch(commitlink, {
