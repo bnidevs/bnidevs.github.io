@@ -94,7 +94,7 @@ document.getElementById("download").addEventListener("click", () => {
       (personname.length == 0 ? "" : "\n") +
       projname +
       "\n\nCommits:\n" +
-      Object.keys(alllinks).reverse().join("\n")
+      alllinks.reverse().join("\n")
   );
 });
 
