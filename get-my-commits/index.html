@@ -13,11 +13,16 @@
 </head>
 	<body>
 		<form onsubmit="event.preventDefault(); return main();">
-			<input type="text" name="repolink" id="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on" size="60"><br><br>
+			<div class="flex">
+				<div id="repolinkssection" class="flex col">
+					<input type="text" name="repolink" class="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on" size="60">
+				</div>
+				&nbsp;<button type="button" id="addrepo">+</button>
+			</div>
 			<input type="text" name="email" id="inputemail" placeholder="Email" size="60"><br><br>
 			<div class="flex"><input type="password" name="patoken" id="inputtoken" placeholder="Personal Access Token" autocomplete="off" size="30"> &nbsp; (optional) &nbsp;<div class="flex"><button id="tokencheckbutton" type="button">Check token</button> &nbsp; <div id="tokenstatus"></div></div></div><br>
 			<input type="checkbox" name="commitstats" id="statscheckbox" value="Get" disabled="true"><label for="commitstats">&nbsp;get commit stats</label> [additions + subtractions; requires token]<br>
-			<input type="checkbox" name="choosedate" id="datecheckbox" value="ChooseDate"><label for="choosedate">&nbsp;choose date</label><br>
+			<input type="checkbox" name="choosedate" id="datecheckbox" value="ChooseDate"><label for="choosedate">&nbsp;choose date</label>
 			<input type="date" name="date" id="datepicker" required><br>
 			<p class="note">
 				The personal access token is optional but your request may fail if your repository has more than 20 branches. <br>

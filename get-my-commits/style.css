@@ -3,6 +3,11 @@
 	user-select: none;
 }
 
+#addrepo {
+	height: fit-content;
+	width: fit-content;
+}
+
 #copylinks {
 	display: none;
 }
@@ -23,6 +28,10 @@
 	display: none;
 }
 
+.inputrepolink {
+	margin-bottom: 10px;
+}
+
 .note {
 	width: 40vw;
 }
@@ -33,6 +42,10 @@
 
 .flex {
 	display: flex;
+}
+
+.col {
+	flex-direction: column;
 }
 
 .add {
