@@ -2,7 +2,7 @@ var personname = "";
 var projname = "";
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 var SEMESTER_START = "2022-08-20T00:00:00Z";
@@ -11,8 +11,9 @@ document.getElementById("datepicker").defaultValue = SEMESTER_START.substring(
   10
 );
 
-document.getElementById("addrepo").addEventListener('click', () => {
-  document.getElementById('repolinkssection').innerHTML += '<input type="text" name="repolink" class="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on" size="60"></input>';
+document.getElementById("addrepo").addEventListener("click", () => {
+  document.getElementById("repolinkssection").innerHTML +=
+    '<input type="text" name="repolink" class="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on" size="60"></input>';
 });
 
 var datelimit = SEMESTER_START;
@@ -124,9 +125,7 @@ var getcommitlinks = async (branchlatest) => {
     lastsha = await fetch(
       repourl +
         "/commits?author=" +
-        encodeURIComponent(
-          document.getElementById("inputemail").value.trim()
-        ) +
+        encodeURIComponent(document.getElementById("inputemail").value.trim()) +
         "&per_page=100&sha=" +
         lastsha +
         "&since=" +
@@ -180,10 +179,8 @@ var getstats = async (commitlink) => {
       for (let f = 0; f < data.files.length; f++) {
         for (let ig = 0; ig < ignore.length; ig++) {
           if (data.files[f].filename.includes(ignore[ig])) {
-            stats[statslinks[commitlink]].additions -=
-              data.files[f].additions;
-            stats[statslinks[commitlink]].deletions -=
-              data.files[f].deletions;
+            stats[statslinks[commitlink]].additions -= data.files[f].additions;
+            stats[statslinks[commitlink]].deletions -= data.files[f].deletions;
           }
         }
       }
@@ -229,9 +226,7 @@ var display = (runstats = false) => {
   var cal = new CalHeatMap();
   cal.init({
     start: new Date(datelimit),
-    range: Math.ceil(
-      Math.abs(new Date() - new Date(datelimit)) / 2629800000
-    ),
+    range: Math.ceil(Math.abs(new Date() - new Date(datelimit)) / 2629800000),
     domain: "month",
     subDomain: "day",
     subDomainTextFormat: "%d",
@@ -264,71 +259,75 @@ var main = () => {
     var repolinks = [];
     let linkfields = document.getElementsByClassName("inputrepolink");
 
-    for(let k = 0; k < linkfields.length; k++){
+    for (let k = 0; k < linkfields.length; k++) {
       let klink = linkfields[k].value.trim();
-      if(klink === ""){
+      if (klink === "") {
         continue;
       }
-      repolinks.push(klink)
+      repolinks.push(klink);
     }
 
-    Promise.all(repolinks.map(async (repolink) => {
-      let owner = repolink.substring(
-        repolink.indexOf("github.com") + 11,
-        repolink.indexOf("/", repolink.indexOf("github.com") + 11)
-      );
-      let repo = repolink.substring(repolink.indexOf(owner) + owner.length + 1);
-  
-      let token = document.getElementById("inputtoken").value.trim();
-  
-      if (token.length == 40) {
-        headerobj.Authorization = "token " + token;
-      }
-  
-      projname = repo;
-  
-      if (repo.charAt(repo.length - 1) == "/") {
-        repo = repo.substring(0, repo.length - 1);
-      }
-  
-      if (document.getElementById("datecheckbox").checked) {
-        if (document.getElementById("datepicker").value === "") {
-          datelimit = SEMESTER_START;
-        } else {
-          datelimit = new Date(
-            document.getElementById("datepicker").value + "T00:00:00Z"
-          ).toISOString();
-        }
-      }
+    Promise.all(
+      repolinks.map(async (repolink) => {
+        let owner = repolink.substring(
+          repolink.indexOf("github.com") + 11,
+          repolink.indexOf("/", repolink.indexOf("github.com") + 11)
+        );
+        let repo = repolink.substring(
+          repolink.indexOf(owner) + owner.length + 1
+        );
 
-      return new Promise((resolve, reject) => {
-        fetch(
-          "https://api.github.com/repos/" +
-            owner +
-            "/" +
-            repo +
-            "/branches?per_page=100",
-          {
-            method: "GET",
-            headers: headerobj,
+        let token = document.getElementById("inputtoken").value.trim();
+
+        if (token.length == 40) {
+          headerobj.Authorization = "token " + token;
+        }
+
+        projname = repo;
+
+        if (repo.charAt(repo.length - 1) == "/") {
+          repo = repo.substring(0, repo.length - 1);
+        }
+
+        if (document.getElementById("datecheckbox").checked) {
+          if (document.getElementById("datepicker").value === "") {
+            datelimit = SEMESTER_START;
+          } else {
+            datelimit = new Date(
+              document.getElementById("datepicker").value + "T00:00:00Z"
+            ).toISOString();
           }
-        )
-          .then((response) => response.json())
-          .then((branches) => {
-            var rtrn = [];
-            for (var i = 0; i < branches.length; i++) {
-              rtrn.push(branches[i]["commit"]["url"]);
+        }
+
+        return new Promise((resolve, reject) => {
+          fetch(
+            "https://api.github.com/repos/" +
+              owner +
+              "/" +
+              repo +
+              "/branches?per_page=100",
+            {
+              method: "GET",
+              headers: headerobj,
             }
-            return rtrn;
-          })
-          .then((branchurls) => {
-            Promise.all(branchurls.map(getcommitlinks)).then(() => {
-              console.log(commitlinks);
-              resolve();
+          )
+            .then((response) => response.json())
+            .then((branches) => {
+              var rtrn = [];
+              for (var i = 0; i < branches.length; i++) {
+                rtrn.push(branches[i]["commit"]["url"]);
+              }
+              return rtrn;
+            })
+            .then((branchurls) => {
+              Promise.all(branchurls.map(getcommitlinks)).then(() => {
+                console.log(commitlinks);
+                resolve();
+              });
             });
-          });
         });
-    })).then(async () => {
+      })
+    ).then(async () => {
       if (document.getElementById("statscheckbox").checked) {
         Promise.all(Object.keys(statslinks).map(getstats))
           .then(() => {
