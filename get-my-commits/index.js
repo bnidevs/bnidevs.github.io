@@ -68,11 +68,7 @@ document.getElementById("copylinks").addEventListener("click", () => {
   var alllinks = Object.keys(commitlinks);
 
   alllinks.sort(function (a, b) {
-    var keyA = new Date(commitlinks[a]),
-      keyB = new Date(commitlinks[b]);
-    if (keyA < keyB) return -1;
-    if (keyA > keyB) return 1;
-    return 0;
+    return a.substring(0,a.indexOf("/commit")).localeCompare(b.substring(0,b.indexOf("/commit"))) || new Date(commitlinks[a]) - new Date(commitlinks[b]);
   });
 
   navigator.clipboard.writeText(alllinks.reverse().join("\n"));
@@ -82,11 +78,7 @@ document.getElementById("download").addEventListener("click", () => {
   var alllinks = Object.keys(commitlinks);
 
   alllinks.sort(function (a, b) {
-    var keyA = new Date(commitlinks[a]),
-      keyB = new Date(commitlinks[b]);
-    if (keyA < keyB) return -1;
-    if (keyA > keyB) return 1;
-    return 0;
+    return a.substring(0,a.indexOf("/commit")).localeCompare(b.substring(0,b.indexOf("/commit"))) || new Date(commitlinks[a]) - new Date(commitlinks[b]);
   });
 
   download(
@@ -191,11 +183,7 @@ var display = (runstats = false) => {
   var alllinks = Object.keys(commitlinks);
 
   alllinks.sort(function (a, b) {
-    var keyA = new Date(commitlinks[a]),
-      keyB = new Date(commitlinks[b]);
-    if (keyA < keyB) return -1;
-    if (keyA > keyB) return 1;
-    return 0;
+    return a.substring(0,a.indexOf("/commit")).localeCompare(b.substring(0,b.indexOf("/commit"))) || new Date(commitlinks[a]) - new Date(commitlinks[b]);
   });
 
   for (var i = 0; i < alllinks.length; i++) {
