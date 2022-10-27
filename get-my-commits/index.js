@@ -19,6 +19,7 @@ document.getElementById("addrepo").addEventListener("click", () => {
 var datelimit = SEMESTER_START;
 
 let commitlinks = {};
+let shatolink = {}; // tree sha for uniqueness (merge commits are not counted twice)
 let statslinks = {};
 let stats = {};
 
@@ -152,6 +153,8 @@ var getcommitlinks = async (branchlatest) => {
           }
           commitlinks[data[i]["html_url"]] =
             data[i]["commit"]["author"]["date"];
+          shatolink[data[i]["commit"]["tree"]["sha"]] = 
+            data[i]["html_url"];
           statslinks[data[i]["url"]] = data[i]["html_url"];
           personname = data[i]["commit"]["author"]["name"];
           // document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
@@ -325,6 +328,17 @@ var main = () => {
             .then((branchurls) => {
               Promise.all(branchurls.map(getcommitlinks)).then(() => {
                 console.log(commitlinks);
+
+                let linktosha = {};
+                shatolink.forEach(sha => {
+                  linktosha[shatolink[sha]] = sha;
+                });
+                commitlinks.forEach(lnk => {
+                  if(!(lnk in linktosha)){
+                    delete commitlinks[lnk];
+                  }
+                })
+
                 resolve();
               });
             });
