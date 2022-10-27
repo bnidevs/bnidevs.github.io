@@ -329,11 +329,11 @@ var main = () => {
                 console.log(commitlinks);
 
                 let linktosha = {};
-                Object.keys(shatolink).forEach(sha => {
+                Object.keys(shatolink).forEach((sha) => {
                   linktosha[shatolink[sha]] = sha;
                 });
-                Object.keys(commitlinks).forEach(lnk => {
-                  if(!(lnk in linktosha)){
+                Object.keys(commitlinks).forEach((lnk) => {
+                  if (!(lnk in linktosha)) {
                     delete commitlinks[lnk];
                   }
                 });
