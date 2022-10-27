@@ -153,8 +153,7 @@ var getcommitlinks = async (branchlatest) => {
           }
           commitlinks[data[i]["html_url"]] =
             data[i]["commit"]["author"]["date"];
-          shatolink[data[i]["commit"]["tree"]["sha"]] = 
-            data[i]["html_url"];
+          shatolink[data[i]["commit"]["tree"]["sha"]] = data[i]["html_url"];
           statslinks[data[i]["url"]] = data[i]["html_url"];
           personname = data[i]["commit"]["author"]["name"];
           // document.getElementById("commitlinks").innerHTML += '<a href="' + data[i]["html_url"] + '">' + data[i]["html_url"] + "</a>" + "<br>";
@@ -330,14 +329,14 @@ var main = () => {
                 console.log(commitlinks);
 
                 let linktosha = {};
-                shatolink.forEach(sha => {
+                shatolink.forEach((sha) => {
                   linktosha[shatolink[sha]] = sha;
                 });
-                commitlinks.forEach(lnk => {
-                  if(!(lnk in linktosha)){
+                commitlinks.forEach((lnk) => {
+                  if (!(lnk in linktosha)) {
                     delete commitlinks[lnk];
                   }
-                })
+                });
 
                 resolve();
               });
