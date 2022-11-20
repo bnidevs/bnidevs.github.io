@@ -1,0 +1,19 @@
+.flex {
+    display: flex;
+}
+
+.overlay {
+    position: absolute;
+    left: 0;
+    width: 80vw;
+}
+
+.hidden {
+    display: none;
+}
+
+#toggle_menu {
+    position: absolute;
+    left: auto;
+    right: 30px;
+}

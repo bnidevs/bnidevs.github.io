@@ -1,30 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <title>Team 3 - Data Science</title>
-        <link rel="stylesheet" href="index.css">
+        <title>Data Visualization</title>
+        <link rel="stylesheet" href="style.css">
     </head>
-
     <body>
-        <h1>Team 3 - Data Science</h1>
-        <p>Team Members:</p>
-        <select id="opts">
-            <option value="population">Population</option>
-            <option value="popdensity">Population Density</option>
-        </select>
-        <br>
-        <svg id="main">
-            <g id="plotg"></g>
-            <g id="tooltip">
-                <rect id="tooltip_bg" x="0" y="0" dx="0" dy="0" rx="2" ry="2"></rect>
-                <text id="tooltip_text">
-                    <tspan id="country_name" x="0" dy="1em"></tspan>
-                    <tspan id="country_data" x="0" dy="1.5em"></tspan>
-                </text>
-            </g>
-        </svg>
+        <h1>Data Science - Team 3 - Fall 2022</h1>
+        <h3>Los Pollos Hermanos - Team Members: Dean Vogel, Julian Lioanag, Nathan Agpalo, Bill Ni</h3>
+        <div class="flex">
+            <div id="img_container">
+            </div>
+            <div id="toggle_menu">
+            </div>
+        </div>
     </body>
-
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="index.js"></script>
 </html>
