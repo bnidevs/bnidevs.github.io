@@ -7,6 +7,8 @@ let overlays = {
     "https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/population_count/population.png?raw=true",
   "Wind Speed":
     "https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/energy_strength/wind/wind.png?raw=true",
+  "Solar Energy":
+    "https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/energy_strength/solar/solar.png?raw=true",
   Earthquakes:
     "https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/natural_disasters/earthquakes/earthquakes.png?raw=true",
   Tsunamis:
