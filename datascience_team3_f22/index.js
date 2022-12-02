@@ -38,19 +38,28 @@ for (let toggle of toggles) {
   });
 }
 
-const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+const vw = Math.max(
+  document.documentElement.clientWidth || 0,
+  window.innerWidth || 0
+);
 let cw = 0;
-document.querySelectorAll(".overlay").forEach(k => {k.width = 0.8 * vw + 100 * cw});
-
-document.getElementById('zoomin').addEventListener('click', () => {
-    cw += 1;
-    document.querySelectorAll(".overlay").forEach(k => {k.width = 0.8 * vw + 100 * cw});
+document.querySelectorAll(".overlay").forEach((k) => {
+  k.width = 0.8 * vw + 100 * cw;
 });
 
-document.getElementById('zoomout').addEventListener('click', () => {
-    if(cw == 0){
-        return;
-    }
-    cw -= 1;
-    document.querySelectorAll(".overlay").forEach(k => {k.width = 0.8 * vw + 100 * cw});
+document.getElementById("zoomin").addEventListener("click", () => {
+  cw += 1;
+  document.querySelectorAll(".overlay").forEach((k) => {
+    k.width = 0.8 * vw + 100 * cw;
+  });
+});
+
+document.getElementById("zoomout").addEventListener("click", () => {
+  if (cw == 0) {
+    return;
+  }
+  cw -= 1;
+  document.querySelectorAll(".overlay").forEach((k) => {
+    k.width = 0.8 * vw + 100 * cw;
+  });
 });
