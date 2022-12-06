@@ -206,7 +206,9 @@ var display = (runstats = false) => {
   for (var i = 0; i < alllinks.length; i++) {
     console.log(stats[alllinks[i]]);
     document.getElementById("commitlinks").innerHTML +=
-      '<tr><td><a href="' +
+      '<tr ' + 
+      (runstats && stats[alllinks[i]].additions > 1000 ? 'style="outline: 1px solid red;"' : '')
+      + '><td><a href="' +
       alllinks[i] +
       '">' +
       alllinks[i] +
@@ -224,6 +226,15 @@ var display = (runstats = false) => {
       "</tr>";
   }
 
+  if(runstats){
+    document.getElementById("commitlinks").innerHTML +=
+      '<tr><td></td><td class="add">&nbsp;+' +
+      Object.keys(stats).reduce((p, k) => p + stats[k].additions, 0) +
+      '</td><td class="del">&nbsp;-' +
+      Object.keys(stats).reduce((p, k) => p + stats[k].deletions, 0) +
+      "</td><td></td></tr>";
+  }
+
   for (var i = 0; i < alllinks.length; i++) {
     heatmap_data[new Date(commitlinks[alllinks[i]]).getTime() / 1000] = 1;
   }
@@ -231,7 +242,7 @@ var display = (runstats = false) => {
   var cal = new CalHeatMap();
   cal.init({
     start: new Date(datelimit),
-    range: Math.ceil(Math.abs(new Date() - new Date(datelimit)) / 2629800000),
+    range: Math.ceil(Math.abs(new Date() - new Date(datelimit)) / 2592000000) + 1,
     domain: "month",
     subDomain: "day",
     subDomainTextFormat: "%d",
