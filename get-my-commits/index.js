@@ -206,9 +206,11 @@ var display = (runstats = false) => {
   for (var i = 0; i < alllinks.length; i++) {
     console.log(stats[alllinks[i]]);
     document.getElementById("commitlinks").innerHTML +=
-      '<tr ' + 
-      (runstats && stats[alllinks[i]].additions > 1000 ? 'style="outline: 1px solid red;"' : '')
-      + '><td><a href="' +
+      "<tr " +
+      (runstats && stats[alllinks[i]].additions > 1000
+        ? 'style="outline: 1px solid red;"'
+        : "") +
+      '><td><a href="' +
       alllinks[i] +
       '">' +
       alllinks[i] +
@@ -226,7 +228,7 @@ var display = (runstats = false) => {
       "</tr>";
   }
 
-  if(runstats){
+  if (runstats) {
     document.getElementById("commitlinks").innerHTML +=
       '<tr><td></td><td class="add">&nbsp;+' +
       Object.keys(stats).reduce((p, k) => p + stats[k].additions, 0) +
@@ -242,7 +244,8 @@ var display = (runstats = false) => {
   var cal = new CalHeatMap();
   cal.init({
     start: new Date(datelimit),
-    range: Math.ceil(Math.abs(new Date() - new Date(datelimit)) / 2592000000) + 1,
+    range:
+      Math.ceil(Math.abs(new Date() - new Date(datelimit)) / 2592000000) + 1,
     domain: "month",
     subDomain: "day",
     subDomainTextFormat: "%d",
