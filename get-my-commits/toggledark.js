@@ -1,4 +1,4 @@
-if(document.cookie != '' && 'dark' in JSON.parse(document.cookie) && document.cookie.dark){
+if(document.cookie != '' && 'dark' in JSON.parse(document.cookie) && JSON.parse(document.cookie)['dark']){
     document.getElementById("darkmodecheckbox").check();
 }
 
