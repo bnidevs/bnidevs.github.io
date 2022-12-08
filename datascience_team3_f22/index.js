@@ -15,6 +15,8 @@ let overlays = {
     "https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/natural_disasters/tsunamis/tsunamis.png?raw=true",
   Hurricanes:
     "https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/natural_disasters/hurricanes/hurricanes.png?raw=true",
+  Vegetation:
+    "https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/surface_properties/vegetation/vegetation.png?raw=true",
 };
 
 for (let overlay in overlays) {
