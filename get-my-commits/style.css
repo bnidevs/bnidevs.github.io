@@ -56,6 +56,25 @@
 	color: red;
 }
 
+body.darkmode {
+	background-color: black;
+	color: white;
+}
+
+input.typefield.darkmode, button.darkmode, input#trigger.darkmode {
+	background-color: black;
+	color: white;
+	outline: 1px solid white;
+	border-radius: 2px;
+}
+
+ {
+	background-color: black;
+	color: white;
+	outline: 1px solid white;
+	border-radius: 2px;
+}
+
 body {
 	padding: 2%;
 }

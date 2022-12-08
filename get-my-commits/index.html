@@ -15,14 +15,15 @@
 		<form onsubmit="event.preventDefault(); return main();">
 			<div class="flex">
 				<div id="repolinkssection" class="flex col">
-					<input type="text" name="repolink" class="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on" size="60">
+					<input type="text" name="repolink" class="inputrepolink typefield" placeholder="GitHub Repo Link" autocomplete="on" size="60">
 				</div>
 				&nbsp;<button type="button" id="addrepo">+</button>
 			</div>
-			<input type="text" name="githubid" id="inputemail" placeholder="Email or Username" size="60"><br><br>
-			<div class="flex"><input type="password" name="patoken" id="inputtoken" placeholder="Personal Access Token" autocomplete="off" size="30"> &nbsp; (optional) &nbsp;<div class="flex"><button id="tokencheckbutton" type="button">Check token</button> &nbsp; <div id="tokenstatus"></div></div></div><br>
+			<input type="text" name="githubid" id="inputemail" placeholder="Email or Username" size="60" class="typefield"><br><br>
+			<div class="flex"><input type="password" name="patoken" id="inputtoken" placeholder="Personal Access Token" autocomplete="off" size="30" class="typefield"> &nbsp; (optional) &nbsp;<div class="flex"><button id="tokencheckbutton" type="button">Check token</button> &nbsp; <div id="tokenstatus"></div></div></div><br>
 			<input type="checkbox" name="commitstats" id="statscheckbox" value="Get" disabled="true"><label for="commitstats">&nbsp;get commit stats</label> [additions + subtractions; requires token]<br>
-			<input type="checkbox" name="choosedate" id="datecheckbox" value="ChooseDate"><label for="choosedate">&nbsp;choose date</label>
+			<input type="checkbox" name="choosedate" id="datecheckbox" value="ChooseDate"><label for="choosedate">&nbsp;choose date</label><br>
+			<input type="checkbox" name="darkmode" id="darkmodecheckbox" value="DarkMode"><label for="darkmode">&nbsp;dark mode (for the nocturnals)</label>
 			<input type="date" name="date" id="datepicker" required><br>
 			<p class="note">
 				The personal access token is optional but your request may fail if your repository has more than 20 branches. <br>
@@ -58,4 +59,5 @@
 	<script type="text/javascript" src="index.js"></script>
 	<script type="text/javascript" src="tokencheck.js"></script>
 	<script type="text/javascript" src="datepicker.js"></script>
+	<script type="text/javascript" src="toggledark.js"></script>
 </html>

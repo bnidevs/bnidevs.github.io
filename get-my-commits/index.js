@@ -242,6 +242,7 @@ var display = (runstats = false) => {
   }
 
   var cal = new CalHeatMap();
+  const dark = document.getElementById("darkmodecheckbox");
   cal.init({
     start: new Date(datelimit),
     range:
@@ -259,8 +260,8 @@ var display = (runstats = false) => {
     displayLegend: false,
     legend: [1, 2, 4, 8, 16],
     legendColors: {
-      min: "#fff",
-      max: "#000",
+      min: dark ? "#000" : "#fff",
+      max: dark ? "#fff" : "#000",
     },
   });
 
