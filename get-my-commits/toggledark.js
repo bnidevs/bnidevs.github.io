@@ -3,7 +3,7 @@ if (
   "dark" in JSON.parse(document.cookie) &&
   JSON.parse(document.cookie)['dark']
 ) {
-  document.getElementById("darkmodecheckbox").check();
+  document.getElementById("darkmodecheckbox").click();
 }
 
 document.getElementById("darkmodecheckbox").addEventListener("change", (e) => {
