@@ -56,23 +56,19 @@
 	color: red;
 }
 
-body.darkmode {
+body.darkmode, input.typefield.darkmode, button.darkmode, input#trigger.darkmode {
 	background-color: black;
-	color: white;
+	color: #ccc;
 }
 
 input.typefield.darkmode, button.darkmode, input#trigger.darkmode {
-	background-color: black;
-	color: white;
 	outline: 1px solid white;
 	border-radius: 2px;
 }
 
- {
-	background-color: black;
-	color: white;
-	outline: 1px solid white;
-	border-radius: 2px;
+input.darkmode::placeholder {
+	color: #ccc;
+	opacity: 1;
 }
 
 body {
