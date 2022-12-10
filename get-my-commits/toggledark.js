@@ -1,10 +1,13 @@
 let toggle = () => {
-  document.getElementsByTagName("body")[0].classList.toggle("darkmode");
-  [...document.getElementsByTagName("input")].map((e) => {
-    e.classList.toggle("darkmode");
-  });
-  [...document.getElementsByTagName("button")].map((e) => {
-    e.classList.toggle("darkmode");
+  const dark = document.getElementById("darkmodecheckbox").checked;
+
+  [...document.getElementsByTagName("input"),
+    ...document.getElementsByTagName("body"),
+    ...document.getElementsByTagName("button")
+  ].map((e) => {
+    if(dark != e.classList.contains("darkmode")){
+      e.classList.toggle("darkmode");
+    }
   });
 
   document.cookie = JSON.stringify({
@@ -17,7 +20,7 @@ if (
   "dark" in JSON.parse(document.cookie) &&
   JSON.parse(document.cookie)["dark"]
 ) {
-  document.getElementById("darkmodecheckbox").click();
+  document.getElementById("darkmodecheckbox").checked = true;
   toggle();
 }
 

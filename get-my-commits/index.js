@@ -260,8 +260,8 @@ var display = (runstats = false) => {
     displayLegend: false,
     legend: [1, 2, 4, 8, 16],
     legendColors: {
-      min: dark ? "#000" : "#fff",
-      max: dark ? "#fff" : "#000",
+      min: "#fff",
+      max: "#000",
     },
   });
 
