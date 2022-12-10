@@ -52,9 +52,19 @@
 	color: red;
 }
 
+@keyframes darkmodeon {
+	from {background-color: white;}
+	to {background-color: black;}
+}
+
 body.darkmode, input.typefield.darkmode, button.darkmode, input#trigger.darkmode {
 	background-color: black;
+	transition: 1s ease-out;
 	color: #ccc;
+}
+
+body, input.typefield, button, input#trigger {
+	transition: 1s ease-out;
 }
 
 input.typefield.darkmode, button.darkmode, input#trigger.darkmode {
