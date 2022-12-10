@@ -1,11 +1,12 @@
 let toggle = () => {
   const dark = document.getElementById("darkmodecheckbox").checked;
 
-  [...document.getElementsByTagName("input"),
+  [
+    ...document.getElementsByTagName("input"),
     ...document.getElementsByTagName("body"),
-    ...document.getElementsByTagName("button")
+    ...document.getElementsByTagName("button"),
   ].map((e) => {
-    if(dark != e.classList.contains("darkmode")){
+    if (dark != e.classList.contains("darkmode")) {
       e.classList.toggle("darkmode");
     }
   });
