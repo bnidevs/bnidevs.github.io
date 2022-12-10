@@ -1,76 +1,99 @@
-#errormsg {
+#textBody {
+	width: 60%;
+	float: left;
+	margin-right: 5%;
+  }
+  
+  #sideLink {
+	width: 30%;
+	float: right;
+  }
+  
+  #errormsg {
 	color: transparent;
 	user-select: none;
-}
-
-#addrepo {
+  }
+  
+  #addrepo {
 	height: fit-content;
 	width: fit-content;
-}
-
-#copylinks {
+  }
+  
+  #copylinks {
 	display: none;
-}
-
-#download {
+  }
+  
+  #download {
 	display: none;
-}
-
-#loadinggif {
+  }
+  
+  #loadinggif {
 	display: none;
-}
-
-#commitlinks {
+  }
+  
+  #commitlinks {
 	font-family: monospace;
-}
-
-#datepicker {
+  }
+  
+  #datepicker {
 	display: none;
-}
-
-.inputrepolink {
+  }
+  
+  #trigger {
+	margin-left: 150px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+  }
+  
+  .inputrepolink {
 	margin-bottom: 10px;
-}
-
-.note {
+  }
+  
+  .note {
 	width: 40vw;
-}
-
-.warning {
+  }
+  
+  .warning {
 	color: red;
-}
-
-.flex {
+  }
+  
+  .flex {
 	display: flex;
-}
-
-.col {
+  }
+  
+  .col {
 	flex-direction: column;
-}
-
-.add {
+  }
+  
+  .add {
 	color: green;
-}
-
-.del {
+  }
+  
+  .del {
 	color: red;
-}
-
-body.darkmode, input.typefield.darkmode, button.darkmode, input#trigger.darkmode {
+  }
+  
+  body.darkmode,
+  input.typefield.darkmode,
+  button.darkmode,
+  input#trigger.darkmode {
 	background-color: black;
 	color: #ccc;
-}
-
-input.typefield.darkmode, button.darkmode, input#trigger.darkmode {
+  }
+  
+  input.typefield.darkmode,
+  button.darkmode,
+  input#trigger.darkmode {
 	outline: 1px solid white;
 	border-radius: 2px;
-}
-
-input.darkmode::placeholder {
+  }
+  
+  input.darkmode::placeholder {
 	color: #ccc;
 	opacity: 1;
-}
-
-body {
+  }
+  
+  body {
 	padding: 2%;
-}
+  }
+  

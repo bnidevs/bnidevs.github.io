@@ -12,7 +12,8 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
 </head>
 	<body>
-		<form onsubmit="event.preventDefault(); return main();">
+
+		<form id  = "mainForm" onsubmit="event.preventDefault(); return main();">
 			<div class="flex">
 				<div id="repolinkssection" class="flex col">
 					<input type="text" name="repolink" class="inputrepolink typefield" placeholder="GitHub Repo Link" autocomplete="on" size="60">
@@ -25,21 +26,34 @@
 			<input type="checkbox" name="choosedate" id="datecheckbox" value="ChooseDate"><label for="choosedate">&nbsp;choose date</label><br>
 			<input type="checkbox" name="darkmode" id="darkmodecheckbox" value="DarkMode"><label for="darkmode">&nbsp;dark mode (for the nocturnals)</label>
 			<input type="date" name="date" id="datepicker" required><br>
-			<p class="note">
-				The personal access token is optional but your request may fail if your repository has more than 20 branches. <br>
-				Providing your personal access token increases the API rate limit to 5000 requests per hour, which should handle repos of all sizes. <br>
-				See <a href="https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api#authenticating">this doc page</a>.<br><br>
+			
+			<div id = "words">
+				<input type="submit" id="trigger" value="Fetch Commits!"> </input><br>
+				<div id = "textBody">
+					
+					The personal access token is optional but your request may fail if your repository has more than 20 branches. <br>
+					<br>
+					Providing your personal access token increases the API rate limit to 5000 requests per hour, which should handle repos of all sizes. <br>
+					<br>
+					There is no need to include any additional permissions for a new token used here when presented the option.<br><br>
+					<p class="warning note">DISCLAIMER: We do NOT share or store your personal access token under any circumstances. <br>
+					You can verify this by viewing the source code.</p>
+				</div>
+				<div id = "sideLinks">
+						<a href="https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api#authenticating">What is a Personal Access Token?</a>
+						<br><br>
+						<a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">How to create a Personal Access Token</a>
+						<br><br>
+						<a href="https://github.com/settings/tokens/new">Create Token</a>
+						<br><br>
+						<a href="https://github.com/bnidevs/bnidevs.github.io/tree/main/get-my-commits">Source Code</a>
+						<br><br>
+				</div>
+		</div>
 
-				This <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">doc</a> will help with getting a personal access token.<br><br>
-
-				You can set up a new personal access token <a href="https://github.com/settings/tokens/new">here</a>. <br>
-				There is no need to include any additional permissions for a new token used here when presented the option.<br><br>
-				
-				<p class="warning note">We do NOT share or store your personal access token under any circumstances. <br>
-				You can verify this by viewing the source code <a href="https://github.com/bnidevs/bnidevs.github.io/tree/main/get-my-commits">here</a>.</p>
-			</p>
-			<input type="submit" id="trigger"></input><br>
 		</form>
+
+		
 		<div id="errormsg">
 			check your inputs
 		</div><br>
