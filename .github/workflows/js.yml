@@ -31,6 +31,7 @@ jobs:
       - name: React Build
         run: |
           cd get-my-commits-dev
+          npm install
           npm run build
           mkdir -p ../get-my-commits
           rm -rf ../get-my-commits
