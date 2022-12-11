@@ -36,7 +36,7 @@ jobs:
           mkdir -p ../get-my-commits
           rm -rf ../get-my-commits
           mkdir -p ../get-my-commits
-          mv -r build/* ../get-my-commits/*
+          mv build/* ../get-my-commits
       
       - name: Git Config
         run: |
