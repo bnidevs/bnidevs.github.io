@@ -45,5 +45,6 @@ jobs:
           
       - name: Push Changes
         run: |
+          git add get-my-commits/
           git commit -am "built commit getter"
           git push
