@@ -13,7 +13,7 @@ document.getElementById("datepicker").defaultValue = SEMESTER_START.substring(
 
 document.getElementById("addrepo").addEventListener("click", () => {
   document.getElementById("repolinkssection").innerHTML +=
-    '<input type="text" name="repolink" class="inputrepolink" placeholder="GitHub Repo Link" autocomplete="on" size="60"></input>';
+    '<input type="text" name="repolink" class="inputrepolink typefield" placeholder="GitHub Repo Link" autocomplete="on" size="60"></input>';
 });
 
 var datelimit = SEMESTER_START;
