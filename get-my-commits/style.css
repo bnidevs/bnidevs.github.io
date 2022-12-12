@@ -16,8 +16,20 @@
 	display: none;
 }
 
+@keyframes rotation {
+  	from {
+    		transform: rotate(0deg);
+  	}
+  	to {
+   		transform: rotate(359deg);
+  	}
+}
+
 #loadinggif {
 	display: none;
+	width: 50vw;
+	max-width: 400px;
+	animation: rotation 2s infinite linear;
 }
 
 #commitlinks {
