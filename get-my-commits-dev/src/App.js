@@ -1,7 +1,7 @@
 import './App.css';
 import { Octokit, App } from 'octokit';
 import { useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 const StatusEnum = {
   None: '',
@@ -11,19 +11,58 @@ const StatusEnum = {
 
 const Row = styled.div`
   display: flex;
+  align-items: center;
+  background: ${(props) => props.theme.bg};
+  color: ${(props) => props.theme.tc};
 `;
 
 const Col = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${(props) => (props.dm ? 'black' : 'white')};
-  color: ${(props) => (props.dm ? 'white' : 'black')};
+  background: ${(props) => props.theme.bg};
+  color: ${(props) => props.theme.tc};
 `;
 
 const Spacer = styled.div`
   width: 10px;
   height 10px;
+  background: ${(props) => props.theme.bg};
+  color: ${(props) => props.theme.tc};
 `;
+
+const InField = styled.input`
+  background: ${(props) => props.theme.bg};
+  color: ${(props) => props.theme.tc};
+  border-radius: 3px;
+  &::placeholder: {
+    color: ${(props) => props.theme.ph};
+    opacity: 1;
+  }
+`;
+
+const StBtn = styled.button`
+  width: min-content;
+  height: min-content;
+  margin: 0 1px 0;
+  border-radius: 3px;
+  align-self: flex-start;
+  white-space: nowrap;
+  background: ${(props) => props.theme.bg};
+  color: ${(props) => props.theme.tc};
+  outline: ${(props) => props.theme.ol};
+`;
+
+Row.defaultProps =
+  Col.defaultProps =
+  Spacer.defaultProps =
+  InField.defaultProps =
+  StBtn.defaultProps =
+    {
+      theme: {
+        bg: 'white',
+        tc: 'black',
+      },
+    };
 
 const Note = () => {
   return (
@@ -65,12 +104,19 @@ const Note = () => {
 };
 
 const TextIn = (props) => {
-  return <input type='text' placeholder={props.ph} size='60' />;
+  return (
+    <InField
+      type='text'
+      placeholder={props.ph}
+      size='60'
+      style={{ marginBottom: '5px' }}
+    />
+  );
 };
 
 const PassIn = (props) => {
   return (
-    <input
+    <InField
       type='password'
       placeholder={props.ph}
       size='40'
@@ -101,11 +147,6 @@ const CheckboxRow = (props) => {
     </Row>
   );
 };
-
-const StBtn = styled.button`
-  width: min-content;
-  height: min-content;
-`;
 
 const Main = () => {
   const tokenRef = useRef();
@@ -153,52 +194,57 @@ const Main = () => {
     }
   }, []);
 
+  const dmTheme = {
+    bg: 'black',
+    tc: 'white',
+    ph: '#ccc',
+    ol: '1px white solid',
+  };
+
   return (
-    <Col className='main'>
-      <Row>
-        <Col>
-          {Array.from({ length: numRepos }, (v, i) => (
-            <Col key={i}>
-              <TextIn ph='GitHub Repo Link' />
-              <Spacer />
-            </Col>
-          ))}
-        </Col>
+    <ThemeProvider theme={darkMode ? dmTheme : {}}>
+      <Col className='main'>
+        <Row>
+          <Col>
+            {Array.from({ length: numRepos }, (v, i) => (
+              <TextIn ph='GitHub Repo Link' key={i} />
+            ))}
+          </Col>
+          <Spacer />
+          <StBtn onClick={() => setNumRepos(numRepos + 1)}>+</StBtn>
+        </Row>
+        <Row>
+          <TextIn ph='Email or Username' />
+        </Row>
         <Spacer />
-        <StBtn onClick={(e) => setNumRepos(numRepos + 1)}>+</StBtn>
-      </Row>
-      <Spacer />
-      <Row>
-        <TextIn ph='Email or Username' />
-      </Row>
-      <Spacer />
-      <Row>
-        <PassIn
-          ph='Personal Access Token'
-          fref={tokenRef}
-          dsst={tokenCheck === StatusEnum.Success}
+        <Row>
+          <PassIn
+            ph='Personal Access Token'
+            fref={tokenRef}
+            dsst={tokenCheck === StatusEnum.Success}
+          />
+          <Spacer />
+          <StBtn onClick={insertToken}>Check Token</StBtn>
+          <Spacer />
+          <StatusEmoji good={tokenCheck} />
+        </Row>
+        <Spacer />
+        <CheckboxRow
+          label='additions + subtractions (requires token)'
+          fref={statsRef}
+          dsst={tokenCheck !== StatusEnum.Success}
+        />
+        <CheckboxRow label='choose date' />
+        <CheckboxRow
+          label='dark mode (for the nocturnals)'
+          oc={changeDM}
+          fref={darkMRef}
         />
         <Spacer />
-        <StBtn onClick={insertToken}>Check Token</StBtn>
-        <Spacer />
-        <StatusEmoji good={tokenCheck} />
-      </Row>
-      <Spacer />
-      <CheckboxRow
-        label='additions + subtractions (requires token)'
-        fref={statsRef}
-        dsst={tokenCheck !== StatusEnum.Success}
-      />
-      <CheckboxRow label='choose date' />
-      <CheckboxRow
-        label='dark mode (for the nocturnals)'
-        oc={changeDM}
-        fref={darkMRef}
-      />
-      <Spacer />
-      <Note />
-      <StBtn onClick={getCommits}>Submit</StBtn>
-    </Col>
+        <Note />
+        <StBtn onClick={getCommits}>Submit</StBtn>
+      </Col>
+    </ThemeProvider>
   );
 };
 
