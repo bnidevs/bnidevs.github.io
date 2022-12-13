@@ -24,10 +24,10 @@ const Col = styled.div`
 `;
 
 const Spacer = styled.div`
-  width: 10px;
-  height 10px;
-  background: ${(props) => props.theme.bg};
-  color: ${(props) => props.theme.tc};
+  width: 0;
+  height: 0;
+  background: transparent;
+  margin: 5px;
 `;
 
 const InField = styled.input`
@@ -154,6 +154,7 @@ const Main = () => {
   const darkMRef = useRef();
   const [numRepos, setNumRepos] = useState(1);
   const [darkMode, setDarkMode] = useState(false);
+  const [chooseDt, setChooseDt] = useState(false);
   const [okit, setOkit] = useState(new Octokit());
   const [tokenCheck, setTokenCheck] = useState(StatusEnum.None);
 
@@ -234,12 +235,17 @@ const Main = () => {
           fref={statsRef}
           dsst={tokenCheck !== StatusEnum.Success}
         />
-        <CheckboxRow label='choose date' />
+        <CheckboxRow
+          label='choose date'
+          oc={(e) => setChooseDt(e.target.checked)}
+        />
         <CheckboxRow
           label='dark mode (for the nocturnals)'
           oc={changeDM}
           fref={darkMRef}
         />
+        <Spacer />
+        <Row>{chooseDt && <input type='date' />}</Row>
         <Spacer />
         <Note />
         <StBtn onClick={getCommits}>Submit</StBtn>
