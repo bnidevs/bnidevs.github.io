@@ -111,6 +111,7 @@ const TextIn = (props) => {
       size='60'
       style={{ marginBottom: '5px' }}
       onChange={props.oc}
+      name={props.nm}
       autoComplete='true'
     />
   );
@@ -215,6 +216,10 @@ const Main = () => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log(commitList);
+  }, [commitList]);
+
   const dmTheme = {
     bg: 'black',
     tc: 'white',
@@ -234,6 +239,7 @@ const Main = () => {
                 oc={(e) => {
                   linkList[i] = e.target.value;
                 }}
+                nm='repolink'
               />
             ))}
           </Col>
@@ -246,6 +252,7 @@ const Main = () => {
             oc={(e) => {
               setAuthor(e.target.value);
             }}
+            nm='githubid'
           />
         </Row>
         <Spacer />
@@ -288,7 +295,10 @@ const Main = () => {
             </Row>
             {commitList.map((e) => (
               <Row key={e.sha}>
-                <a href={e.html_url}>{e.html_url}</a>
+                <Col>
+                  <a href={e.html_url}>{e.html_url}</a>
+                </Col>
+                <Col>{new Date(e.commit.author.time.date).toDateString()}</Col>
               </Row>
             ))}
           </Col>
