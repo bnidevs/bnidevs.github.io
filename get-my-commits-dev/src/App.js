@@ -110,6 +110,8 @@ const TextIn = (props) => {
       placeholder={props.ph}
       size='60'
       style={{ marginBottom: '5px' }}
+      onChange={props.oc}
+      autoComplete='true'
     />
   );
 };
@@ -152,6 +154,9 @@ const Main = () => {
   const tokenRef = useRef();
   const statsRef = useRef();
   const darkMRef = useRef();
+  const [linkList] = useState({}); // slightly misleading, this is an object, not a list/array
+  const [commitList, setCommitList] = useState([]);
+  const [author, setAuthor] = useState('');
   const [numRepos, setNumRepos] = useState(1);
   const [darkMode, setDarkMode] = useState(false);
   const [chooseDt, setChooseDt] = useState(false);
@@ -168,7 +173,22 @@ const Main = () => {
     document.cookie = JSON.stringify({ dark: cbs });
   };
 
-  const getCommits = async () => {};
+  const getAllCommits = async () => {
+    const repoList = Object.values(linkList);
+    Promise.all(repoList.map(getPerRepo)).then((commits) => {
+      setCommitList([...commits, ...commitList]);
+    });
+  };
+
+  const getPerRepo = async (l) => {
+    const repoPath = new URL(l).pathname.replace(/^\/|\/$/g, '').split('/');
+    const commits = okit.paginate(okit.rest.repos.listCommits, {
+      owner: repoPath[0],
+      repo: repoPath[1],
+      author: author,
+    });
+    return commits;
+  };
 
   useEffect(() => {
     const checkToken = async () => {
@@ -208,14 +228,25 @@ const Main = () => {
         <Row>
           <Col>
             {Array.from({ length: numRepos }, (v, i) => (
-              <TextIn ph='GitHub Repo Link' key={i} />
+              <TextIn
+                ph='GitHub Repo Link'
+                key={i}
+                oc={(e) => {
+                  linkList[i] = e.target.value;
+                }}
+              />
             ))}
           </Col>
           <Spacer />
           <StBtn onClick={() => setNumRepos(numRepos + 1)}>+</StBtn>
         </Row>
         <Row>
-          <TextIn ph='Email or Username' />
+          <TextIn
+            ph='Email or Username'
+            oc={(e) => {
+              setAuthor(e.target.value);
+            }}
+          />
         </Row>
         <Spacer />
         <Row>
@@ -248,7 +279,20 @@ const Main = () => {
         <Row>{chooseDt && <input type='date' />}</Row>
         <Spacer />
         <Note />
-        <StBtn onClick={getCommits}>Submit</StBtn>
+        <StBtn onClick={getAllCommits}>Submit</StBtn>
+        {commitList.length > 0 && (
+          <Col>
+            <Row>
+              <StBtn>Copy</StBtn>
+              <StBtn>Download</StBtn>
+            </Row>
+            {commitList.map((e) => (
+              <Row key={e.sha}>
+                <a href={e.html_url}>{e.html_url}</a>
+              </Row>
+            ))}
+          </Col>
+        )}
       </Col>
     </ThemeProvider>
   );
