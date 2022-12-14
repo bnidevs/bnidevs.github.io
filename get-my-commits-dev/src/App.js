@@ -151,6 +151,12 @@ const CheckboxRow = (props) => {
   );
 };
 
+const CommitTable = styled.table`
+  font-family: monospace;
+  width: min-content;
+  white-space: nowrap;
+`;
+
 const Main = () => {
   const tokenRef = useRef();
   const statsRef = useRef();
@@ -177,7 +183,7 @@ const Main = () => {
   const getAllCommits = async () => {
     const repoList = Object.values(linkList);
     Promise.all(repoList.map(getPerRepo)).then((commits) => {
-      setCommitList([...commits, ...commitList]);
+      setCommitList(commitList.concat(...commits));
     });
   };
 
@@ -215,10 +221,6 @@ const Main = () => {
       darkMRef.current.checked = cookieDM;
     }
   }, []);
-
-  useEffect(() => {
-    console.log(commitList);
-  }, [commitList]);
 
   const dmTheme = {
     bg: 'black',
@@ -287,20 +289,28 @@ const Main = () => {
         <Spacer />
         <Note />
         <StBtn onClick={getAllCommits}>Submit</StBtn>
+        <Spacer />
+        <Spacer />
+        <Spacer />
         {commitList.length > 0 && (
           <Col>
             <Row>
               <StBtn>Copy</StBtn>
               <StBtn>Download</StBtn>
             </Row>
-            {commitList.map((e) => (
-              <Row key={e.sha}>
-                <Col>
-                  <a href={e.html_url}>{e.html_url}</a>
-                </Col>
-                <Col>{new Date(e.commit.author.time.date).toDateString()}</Col>
-              </Row>
-            ))}
+            <Spacer />
+            <CommitTable>
+              {commitList.map((e) => (
+                <tr key={e.sha}>
+                  <td>
+                    <a href={e.html_url}>{e.html_url}</a>
+                  </td>
+                  <td>
+                    {new Date(e.commit.author.date).toDateString().substring(3)}
+                  </td>
+                </tr>
+              ))}
+            </CommitTable>
           </Col>
         )}
       </Col>
