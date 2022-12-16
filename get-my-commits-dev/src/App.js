@@ -1,12 +1,38 @@
 import './App.css';
-import { Octokit, App } from 'octokit';
+import { Octokit } from 'octokit';
 import { useState, useRef, useEffect } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, keyframes } from 'styled-components';
 
 const StatusEnum = {
   None: '',
   Failed: '0x274C',
   Success: '0x2705',
+};
+
+const GetEnum = {
+  None: 'None',
+  Failed: 'Failed',
+  Success: 'Success',
+};
+
+const BaseDates = {
+  Spring: new Date(new Date().getFullYear(), 0, 1),
+  Summer: new Date(new Date().getFullYear(), 4, 15),
+  Fall: new Date(new Date().getFullYear(), 7, 20),
+};
+
+const GetBaseDate = () => {
+  const mp = { 1: 'Spring', 2: 'Summer', 3: 'Fall' };
+
+  const which = Object.keys(BaseDates).reduce((p, k) => {
+    return p + (new Date() > BaseDates[k] ? 1 : 0);
+  }, 0);
+
+  return BaseDates[mp[which]];
+};
+
+const ISODate = (d) => {
+  return d.toISOString().split('T')[0];
 };
 
 const Row = styled.div`
@@ -50,6 +76,17 @@ const StBtn = styled.button`
   background: ${(props) => props.theme.bg};
   color: ${(props) => props.theme.tc};
   outline: ${(props) => props.theme.ol};
+`;
+
+const rotateAnimation = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(359deg); }
+`;
+
+const LoadingImg = styled.img`
+  height: 1em;
+  width: 1em;
+  animation: ${rotateAnimation} 2s infinite linear;
 `;
 
 Row.defaultProps =
@@ -161,9 +198,13 @@ const Main = () => {
   const tokenRef = useRef();
   const statsRef = useRef();
   const darkMRef = useRef();
+  const [baseDate, setBaseDate] = useState(new Date());
   const [linkList] = useState({}); // slightly misleading, this is an object, not a list/array
-  const [commitList, setCommitList] = useState([]);
+  const [commitList] = useState([]);
+  const [getStatus, setGetStatus] = useState(GetEnum.None);
+  const [errMsg, setErrMsg] = useState('');
   const [author, setAuthor] = useState('');
+  const [loading, setLoading] = useState(false);
   const [numRepos, setNumRepos] = useState(1);
   const [darkMode, setDarkMode] = useState(false);
   const [chooseDt, setChooseDt] = useState(false);
@@ -182,19 +223,99 @@ const Main = () => {
 
   const getAllCommits = async () => {
     const repoList = Object.values(linkList);
-    Promise.all(repoList.map(getPerRepo)).then((commits) => {
-      setCommitList(commitList.concat(...commits));
-    });
+    let shaSet = {};
+    setLoading(true);
+    try {
+      Promise.all(repoList.map(getPerRepo))
+        .then((commits) => {
+          commits.forEach((perRepo) => {
+            perRepo
+              .filter((c) => {
+                return c.parents.length < 2;
+              })
+              .filter((c) => {
+                let b = false;
+                if (!(c.commit.tree.sha in shaSet)) {
+                  shaSet[c.commit.tree.sha] = 1;
+                  b = true;
+                }
+                return b;
+              })
+              .forEach((c) => {
+                commitList.push(c);
+              });
+          });
+        })
+        .then(() => {
+          setLoading(false);
+          setGetStatus(GetEnum.Success);
+        });
+    } catch (e) {
+      setGetStatus(GetEnum.Failed);
+      setErrMsg(e.toString());
+    }
   };
 
   const getPerRepo = async (l) => {
     const repoPath = new URL(l).pathname.replace(/^\/|\/$/g, '').split('/');
-    const commits = okit.paginate(okit.rest.repos.listCommits, {
+    let shaSet = {};
+    let allCommits = [];
+    const mainCommits = await okit.paginate(okit.rest.repos.listCommits, {
       owner: repoPath[0],
       repo: repoPath[1],
       author: author,
+      since: baseDate.toISOString(),
     });
-    return commits;
+
+    mainCommits.forEach((c) => {
+      shaSet[c.commit.tree.sha] = 1;
+    });
+
+    allCommits = allCommits.concat(mainCommits);
+
+    let branches = await okit.paginate(okit.rest.repos.listBranches, {
+      owner: repoPath[0],
+      repo: repoPath[1],
+    });
+
+    branches = branches.map((b) => b.name);
+
+    return Promise.all(
+      branches.map(async (b) => {
+        let branchCommits = await okit.paginate(okit.rest.repos.listCommits, {
+          owner: repoPath[0],
+          repo: repoPath[1],
+          author: author,
+          since: baseDate.toISOString(),
+          sha: b,
+        });
+
+        branchCommits = branchCommits.filter((c) => {
+          let b = false;
+          if (!(c.commit.tree.sha in shaSet)) {
+            shaSet[c.commit.tree.sha] = 1;
+            b = true;
+          }
+          return b;
+        });
+
+        return branchCommits;
+      })
+    )
+      .then((bCommits) => {
+        bCommits.forEach((branch) => {
+          allCommits = allCommits.concat(branch);
+        });
+      })
+      .then(() => {
+        allCommits.sort((a, b) => {
+          return -(
+            new Date(a.commit.author.date) - new Date(b.commit.author.date)
+          );
+        });
+
+        return allCommits;
+      });
   };
 
   useEffect(() => {
@@ -220,6 +341,10 @@ const Main = () => {
       setDarkMode(cookieDM);
       darkMRef.current.checked = cookieDM;
     }
+  }, []);
+
+  useEffect(() => {
+    setBaseDate(GetBaseDate());
   }, []);
 
   const dmTheme = {
@@ -248,6 +373,7 @@ const Main = () => {
           <Spacer />
           <StBtn onClick={() => setNumRepos(numRepos + 1)}>+</StBtn>
         </Row>
+        <Spacer />
         <Row>
           <TextIn
             ph='Email or Username'
@@ -285,14 +411,34 @@ const Main = () => {
           fref={darkMRef}
         />
         <Spacer />
-        <Row>{chooseDt && <input type='date' />}</Row>
-        <Spacer />
+        {chooseDt && (
+          <>
+            <Row>
+              <input
+                type='date'
+                defaultValue={ISODate(baseDate)}
+                min={ISODate(new Date(new Date().getFullYear(), 0, 1))}
+                max={ISODate(new Date())}
+                onChange={(e) => {
+                  setBaseDate(new Date(e.target.value));
+                }}
+              />
+            </Row>
+            <Spacer />
+          </>
+        )}
         <Note />
-        <StBtn onClick={getAllCommits}>Submit</StBtn>
+        <Row>
+          <StBtn onClick={getAllCommits}>Submit</StBtn>
+          <Spacer />
+          {loading && (
+            <LoadingImg src='https://github.com/rcos/rcos-branding/blob/master/img/logo-circle-red.png?raw=true' />
+          )}
+        </Row>
         <Spacer />
         <Spacer />
         <Spacer />
-        {commitList.length > 0 && (
+        {getStatus === GetEnum.Success && (
           <Col>
             <Row>
               <StBtn>Copy</StBtn>
@@ -300,17 +446,27 @@ const Main = () => {
             </Row>
             <Spacer />
             <CommitTable>
-              {commitList.map((e) => (
-                <tr key={e.sha}>
-                  <td>
-                    <a href={e.html_url}>{e.html_url}</a>
-                  </td>
-                  <td>
-                    {new Date(e.commit.author.date).toDateString().substring(3)}
-                  </td>
-                </tr>
-              ))}
+              <tbody>
+                {commitList.map((e) => (
+                  <tr key={e.sha}>
+                    <td>
+                      <a href={e.html_url}>{e.html_url}</a>
+                    </td>
+                    <td>
+                      {new Date(e.commit.author.date)
+                        .toDateString()
+                        .substring(3)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </CommitTable>
+          </Col>
+        )}
+        {getStatus === GetEnum.Failed && (
+          <Col>
+            <p className='warning'>Fetch failed</p>
+            <p>{errMsg}</p>
           </Col>
         )}
       </Col>
