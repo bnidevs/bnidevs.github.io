@@ -1,0 +1,36 @@
+name: Prettier + Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - react-get-my-commits
+
+jobs:
+  get-my-commits-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: React Build
+        run: |
+          cd get-my-commits-dev
+          npm install
+          npm run build
+          mkdir -p ../get-my-commits
+          rm -rf ../get-my-commits
+          mkdir -p ../get-my-commits
+          mv build/* ../get-my-commits
+      
+      - name: Git Config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          
+      - name: Push Changes
+        run: |
+          git add get-my-commits/
+          git commit -am "built commit getter"
+          git push
