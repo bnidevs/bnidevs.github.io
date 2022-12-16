@@ -89,6 +89,10 @@ const LoadingImg = styled.img`
   animation: ${rotateAnimation} 2s infinite linear;
 `;
 
+const StatsCell = styled.td`
+  color: ${(props) => (props.stattype === 'a' ? 'green' : 'red')};
+`;
+
 Row.defaultProps =
   Col.defaultProps =
   Spacer.defaultProps =
@@ -201,7 +205,9 @@ const Main = () => {
   const [baseDate, setBaseDate] = useState(new Date());
   const [linkList] = useState({}); // slightly misleading, this is an object, not a list/array
   const [commitList] = useState([]);
+  const [statsList] = useState({});
   const [getStatus, setGetStatus] = useState(GetEnum.None);
+  const [statStatus, setStatStatus] = useState(GetEnum.None);
   const [errMsg, setErrMsg] = useState('');
   const [author, setAuthor] = useState('');
   const [loading, setLoading] = useState(false);
@@ -245,6 +251,12 @@ const Main = () => {
                 commitList.push(c);
               });
           });
+        })
+        .then(() => {
+          if (!statsRef.current.checked) {
+            return;
+          }
+          getCommitStats();
         })
         .then(() => {
           setLoading(false);
@@ -316,6 +328,40 @@ const Main = () => {
 
         return allCommits;
       });
+  };
+
+  const getCommitStats = async () => {
+    const ignoredFiles = [
+      'package-lock.json',
+      'contents.xcworkspacedata',
+      'IDEWorkspaceChecks.plist',
+      'Package.resolved',
+      'yarn.lock',
+    ];
+
+    return Promise.all(
+      commitList.map(async (c) => {
+        let commitData = await okit.request(`GET ${new URL(c.url).pathname}`);
+
+        commitData = commitData.data;
+
+        let a = commitData.stats.additions;
+        let d = commitData.stats.deletions;
+
+        commitData.files.forEach((f) => {
+          for (let i in ignoredFiles) {
+            if (f.filename.includes(ignoredFiles[i])) {
+              a -= f.additions;
+              d -= f.deletions;
+            }
+          }
+        });
+
+        statsList[c.sha] = [a, d];
+      })
+    ).then(() => {
+      setStatStatus(GetEnum.Success);
+    });
   };
 
   useEffect(() => {
@@ -452,6 +498,17 @@ const Main = () => {
                     <td>
                       <a href={e.html_url}>{e.html_url}</a>
                     </td>
+                    {statsRef.current.checked &&
+                      statStatus === GetEnum.Success && (
+                        <>
+                          <StatsCell stattype='a'>
+                            +{statsList[e.sha][0]}
+                          </StatsCell>
+                          <StatsCell stattype='d'>
+                            -{statsList[e.sha][1]}
+                          </StatsCell>
+                        </>
+                      )}
                     <td>
                       {new Date(e.commit.author.date)
                         .toDateString()
@@ -459,6 +516,18 @@ const Main = () => {
                     </td>
                   </tr>
                 ))}
+                {statsRef.current.checked && statStatus === GetEnum.Success && (
+                  <tr>
+                    <td />
+                    <StatsCell stattype='a'>
+                      +{Object.values(statsList).reduce((p, c) => p + c[0], 0)}
+                    </StatsCell>
+                    <StatsCell stattype='d'>
+                      -{Object.values(statsList).reduce((p, c) => p + c[1], 0)}
+                    </StatsCell>
+                    <td />
+                  </tr>
+                )}
               </tbody>
             </CommitTable>
           </Col>
