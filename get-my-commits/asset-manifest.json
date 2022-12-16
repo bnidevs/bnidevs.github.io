@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.df3dce4d.css",
-    "main.js": "/static/js/main.89108b40.js",
-    "static/js/787.76319220.chunk.js": "/static/js/787.76319220.chunk.js",
-    "index.html": "/index.html",
-    "main.df3dce4d.css.map": "/static/css/main.df3dce4d.css.map",
-    "main.89108b40.js.map": "/static/js/main.89108b40.js.map",
-    "787.76319220.chunk.js.map": "/static/js/787.76319220.chunk.js.map"
+    "main.css": "/get-my-commits/static/css/main.df3dce4d.css",
+    "main.js": "/get-my-commits/static/js/main.b64f2e60.js",
+    "static/js/787.76319220.chunk.js": "/get-my-commits/static/js/787.76319220.chunk.js",
+    "index.html": "/get-my-commits/index.html",
+    "main.df3dce4d.css.map": "/get-my-commits/static/css/main.df3dce4d.css.map",
+    "main.b64f2e60.js.map": "/get-my-commits/static/js/main.b64f2e60.js.map",
+    "787.76319220.chunk.js.map": "/get-my-commits/static/js/787.76319220.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.df3dce4d.css",
-    "static/js/main.89108b40.js"
+    "static/js/main.b64f2e60.js"
   ]
 }
