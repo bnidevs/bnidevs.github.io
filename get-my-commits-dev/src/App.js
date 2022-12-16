@@ -2,6 +2,7 @@ import './App.css';
 import { Octokit } from 'octokit';
 import { useState, useRef, useEffect } from 'react';
 import styled, { ThemeProvider, keyframes } from 'styled-components';
+// import CalendarHeatmap from 'react-calendar-heatmap';
 
 const StatusEnum = {
   None: '',
@@ -226,6 +227,34 @@ const Main = () => {
     setDarkMode(cbs);
     document.cookie = JSON.stringify({ dark: cbs });
   };
+
+  const copyCommits = () => {
+    navigator.clipboard.writeText(
+      commitList
+        .map((c) => c.html_url)
+        .reverse()
+        .join('\n')
+    );
+  };
+
+  // const getDateCount = () => {
+  //   let dates = {};
+  //   for (let c in commitList) {
+  //     const cd = ISODate(new Date(commitList[c].commit.author.date));
+  //     if (cd in dates) {
+  //       dates[cd]++;
+  //     } else {
+  //       dates[cd] = 1;
+  //     }
+  //   }
+
+  //   let rtrn = [];
+  //   Object.keys(dates).forEach((d) => {
+  //     rtrn.push({ date: d, count: dates[d] });
+  //   });
+
+  //   return rtrn;
+  // };
 
   const getAllCommits = async () => {
     const repoList = Object.values(linkList);
@@ -487,8 +516,7 @@ const Main = () => {
         {getStatus === GetEnum.Success && (
           <Col>
             <Row>
-              <StBtn>Copy</StBtn>
-              <StBtn>Download</StBtn>
+              <StBtn onClick={copyCommits}>Copy</StBtn>
             </Row>
             <Spacer />
             <CommitTable>
@@ -530,6 +558,11 @@ const Main = () => {
                 )}
               </tbody>
             </CommitTable>
+            {/* <CalendarHeatmap
+              startDate={baseDate}
+              endDate={new Date()}
+              values={getDateCount()}
+            /> */}
           </Col>
         )}
         {getStatus === GetEnum.Failed && (
