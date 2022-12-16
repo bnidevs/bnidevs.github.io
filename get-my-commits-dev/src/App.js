@@ -94,6 +94,10 @@ const StatsCell = styled.td`
   color: ${(props) => (props.stattype === 'a' ? 'green' : 'red')};
 `;
 
+const CommitRow = styled.tr`
+  outline: ${(props) => (props.loc > 1000 ? '1px solid red' : '')};
+`;
+
 Row.defaultProps =
   Col.defaultProps =
   Spacer.defaultProps =
@@ -522,7 +526,14 @@ const Main = () => {
             <CommitTable>
               <tbody>
                 {commitList.map((e) => (
-                  <tr key={e.sha}>
+                  <CommitRow
+                    key={e.sha}
+                    loc={
+                      statsRef.current.checked && statStatus === GetEnum.Success
+                        ? Math.max(...statsList[e.sha])
+                        : 0
+                    }
+                  >
                     <td>
                       <a href={e.html_url}>{e.html_url}</a>
                     </td>
@@ -542,7 +553,7 @@ const Main = () => {
                         .toDateString()
                         .substring(3)}
                     </td>
-                  </tr>
+                  </CommitRow>
                 ))}
                 {statsRef.current.checked && statStatus === GetEnum.Success && (
                   <tr>
