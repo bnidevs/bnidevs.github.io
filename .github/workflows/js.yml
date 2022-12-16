@@ -25,6 +25,7 @@ jobs:
           mv build/* ../get-my-commits
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
+          cd ..
           git add get-my-commits/
           git commit -am "built commit getter"
           git push
