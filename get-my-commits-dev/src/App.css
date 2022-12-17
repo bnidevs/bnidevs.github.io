@@ -1,6 +1,7 @@
 .main {
   padding: 10px;
   width: 100vw;
+  min-height: 100vh;
 }
 
 .warning {
