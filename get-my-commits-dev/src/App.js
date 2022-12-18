@@ -1,8 +1,9 @@
 import './App.css';
+import 'react-calendar-heatmap/dist/styles.css';
 import { Octokit } from 'octokit';
 import { useState, useRef, useEffect } from 'react';
 import styled, { ThemeProvider, keyframes } from 'styled-components';
-// import CalendarHeatmap from 'react-calendar-heatmap';
+import CalendarHeatmap from 'react-calendar-heatmap';
 
 const StatusEnum = {
   None: '',
@@ -33,7 +34,10 @@ const GetBaseDate = () => {
 };
 
 const ISODate = (d) => {
-  return d.toISOString().split('T')[0];
+  let localISO = new Date(
+    d.getTime() - d.getTimezoneOffset() * 60000
+  ).toISOString();
+  return localISO.split('T')[0];
 };
 
 const Row = styled.div`
@@ -208,13 +212,14 @@ const Main = () => {
   const statsRef = useRef();
   const darkMRef = useRef();
   const [baseDate, setBaseDate] = useState(new Date());
-  const [linkList] = useState({}); // slightly misleading, this is an object, not a list/array
-  const [commitList] = useState([]);
-  const [statsList] = useState({});
+  const [linkList, setLinkList] = useState({}); // slightly misleading, this is an object, not a list/array
+  const [commitList, setCommitList] = useState([]);
+  const [statsList, setStatsList] = useState({});
   const [getStatus, setGetStatus] = useState(GetEnum.None);
   const [statStatus, setStatStatus] = useState(GetEnum.None);
   const [errMsg, setErrMsg] = useState('');
   const [author, setAuthor] = useState('');
+  const [calTooltip, setCalTooltip] = useState('');
   const [loading, setLoading] = useState(false);
   const [numRepos, setNumRepos] = useState(1);
   const [darkMode, setDarkMode] = useState(false);
@@ -241,24 +246,33 @@ const Main = () => {
     );
   };
 
-  // const getDateCount = () => {
-  //   let dates = {};
-  //   for (let c in commitList) {
-  //     const cd = ISODate(new Date(commitList[c].commit.author.date));
-  //     if (cd in dates) {
-  //       dates[cd]++;
-  //     } else {
-  //       dates[cd] = 1;
-  //     }
-  //   }
+  const reset = () => {
+    setGetStatus(GetEnum.None);
+    setStatStatus(GetEnum.None);
+    setCommitList([]);
+    setStatsList({});
+    setLinkList({});
+    setErrMsg('');
+  };
 
-  //   let rtrn = [];
-  //   Object.keys(dates).forEach((d) => {
-  //     rtrn.push({ date: d, count: dates[d] });
-  //   });
+  const getDateCount = () => {
+    let dates = {};
+    for (let c in commitList) {
+      const cd = ISODate(new Date(commitList[c].commit.author.date));
+      if (cd in dates) {
+        dates[cd]++;
+      } else {
+        dates[cd] = 1;
+      }
+    }
 
-  //   return rtrn;
-  // };
+    let rtrn = [];
+    Object.keys(dates).forEach((d) => {
+      rtrn.push({ date: d, count: dates[d] });
+    });
+
+    return rtrn;
+  };
 
   const getAllCommits = async () => {
     const repoList = Object.values(linkList);
@@ -569,11 +583,39 @@ const Main = () => {
                 )}
               </tbody>
             </CommitTable>
-            {/* <CalendarHeatmap
-              startDate={baseDate}
-              endDate={new Date()}
-              values={getDateCount()}
-            /> */}
+            <Row>
+              <CalendarHeatmap
+                id='cal-heatmap'
+                startDate={baseDate}
+                endDate={new Date()}
+                values={getDateCount()}
+                gutterSize={2}
+                showWeekdayLabels={true}
+                weekdayLabels={['S', 'M', 'T', 'W', 'T', 'F', 'S']}
+                onMouseOver={(e, value) => {
+                  if (value) {
+                    setCalTooltip(value);
+                  }
+                }}
+                onMouseLeave={() => {
+                  setCalTooltip('');
+                }}
+                classForValue={(value) => {
+                  if (!value) {
+                    return 'color-0';
+                  }
+                  return `color-${Math.min(
+                    Math.floor(Math.log2(value.count)),
+                    4
+                  )}`;
+                }}
+              />
+              {calTooltip !== '' && (
+                <Col>
+                  {calTooltip.date}: {calTooltip.count} commits
+                </Col>
+              )}
+            </Row>
           </Col>
         )}
         {getStatus === GetEnum.Failed && (
