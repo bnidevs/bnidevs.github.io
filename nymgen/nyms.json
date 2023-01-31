@@ -1,0 +1,74 @@
+{
+    "wonders": [
+        {
+            "name": "everest",
+            "reference": "https://en.wikipedia.org/wiki/Mount_Everest"
+        },
+        {
+            "name": "hogwarts",
+            "reference": "https://en.wikipedia.org/wiki/Hogwarts"
+        },
+        {
+            "name": "kilimanjaro",
+            "reference": "https://en.wikipedia.org/wiki/Mount_Kilimanjaro"
+        },
+        {
+            "name": "mars",
+            "reference": "https://en.wikipedia.org/wiki/Mars"
+        },
+        {
+            "name": "camelot",
+            "reference": "https://en.wikipedia.org/wiki/Camelot"
+        },
+        {
+            "name": "rome",
+            "reference": "https://en.wikipedia.org/wiki/Rome"
+        },
+        {
+            "name": "halo",
+            "reference": "https://en.wikipedia.org/wiki/Factions_of_Halo#Halo_Array"
+        },
+        {
+            "name": "elysium",
+            "reference": "https://en.wikipedia.org/wiki/Elysium_(film)"
+        },
+        {
+            "name": "pandora",
+            "reference": "https://en.wikipedia.org/wiki/Pandoran_biosphere"
+        },
+        {
+            "name": "erebor",
+            "reference": "https://en.wikipedia.org/wiki/Lonely_Mountain"
+        },
+        {
+            "name": "gondor",
+            "reference": "https://en.wikipedia.org/wiki/Gondor"
+        },
+        {
+            "name": "olympus",
+            "reference": "https://en.wikipedia.org/wiki/Mount_Olympus"
+        },
+        {
+            "name": "fuji",
+            "reference": "https://en.wikipedia.org/wiki/Mount_Fuji"
+        },
+        {
+            "name": "instanbul",
+            "reference": "https://en.wikipedia.org/wiki/Istanbul"
+        },
+        {
+            "name": "paradise",
+            "reference": "https://en.wikipedia.org/wiki/Paradise"
+        }
+    ],
+    "structures": [
+        {
+            "name": "liberty",
+            "reference": "https://en.wikipedia.org/wiki/Statue_of_Liberty"
+        },
+        {
+            "name": "rushmore",
+            "reference": "https://en.wikipedia.org/wiki/Mount_Rushmore"
+        }
+    ]
+}
