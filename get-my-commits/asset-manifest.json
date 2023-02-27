@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/get-my-commits/static/css/main.08b83e2f.css",
-    "main.js": "/get-my-commits/static/js/main.968ad5b6.js",
+    "main.js": "/get-my-commits/static/js/main.3078329a.js",
     "static/js/787.76319220.chunk.js": "/get-my-commits/static/js/787.76319220.chunk.js",
     "index.html": "/get-my-commits/index.html",
     "main.08b83e2f.css.map": "/get-my-commits/static/css/main.08b83e2f.css.map",
-    "main.968ad5b6.js.map": "/get-my-commits/static/js/main.968ad5b6.js.map",
+    "main.3078329a.js.map": "/get-my-commits/static/js/main.3078329a.js.map",
     "787.76319220.chunk.js.map": "/get-my-commits/static/js/787.76319220.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.08b83e2f.css",
-    "static/js/main.968ad5b6.js"
+    "static/js/main.3078329a.js"
   ]
 }
