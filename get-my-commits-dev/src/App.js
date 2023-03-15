@@ -37,7 +37,7 @@ const LastYear = () => {
   let today = new Date();
   today.setFullYear(today.getFullYear() - 1);
   return today;
-}
+};
 
 const ISODate = (d) => {
   let localISO = new Date(
@@ -113,12 +113,12 @@ Row.defaultProps =
   Spacer.defaultProps =
   InField.defaultProps =
   StBtn.defaultProps =
-  {
-    theme: {
-      bg: 'white',
-      tc: 'black',
-    },
-  };
+    {
+      theme: {
+        bg: 'white',
+        tc: 'black',
+      },
+    };
 
 const Note = () => {
   return (
