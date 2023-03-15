@@ -33,6 +33,12 @@ const GetBaseDate = () => {
   return BaseDates[mp[which]];
 };
 
+const LastYear = () => {
+  let today = new Date();
+  today.setFullYear(today.getFullYear() - 1);
+  return today;
+}
+
 const ISODate = (d) => {
   let localISO = new Date(
     d.getTime() - d.getTimezoneOffset() * 60000
@@ -107,12 +113,12 @@ Row.defaultProps =
   Spacer.defaultProps =
   InField.defaultProps =
   StBtn.defaultProps =
-    {
-      theme: {
-        bg: 'white',
-        tc: 'black',
-      },
-    };
+  {
+    theme: {
+      bg: 'white',
+      tc: 'black',
+    },
+  };
 
 const Note = () => {
   return (
@@ -510,7 +516,7 @@ const Main = () => {
               <input
                 type='date'
                 defaultValue={ISODate(baseDate)}
-                min={ISODate(new Date(new Date().getFullYear(), 0, 1))}
+                min={ISODate(LastYear())}
                 max={ISODate(new Date())}
                 onChange={(e) => {
                   setBaseDate(new Date(e.target.value));
