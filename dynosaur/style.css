@@ -1,0 +1,88 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+
+    overflow: hidden;
+
+    margin: 0;
+}
+
+#intro_title {
+    text-shadow: 7px 7px #fff, 10px 10px #000, 4px 4px #000, 4px 10px #000, 10px 4px #000;
+    text-align: center;
+}
+
+#intro_invis {
+    text-shadow: 7px 7px transparent, 10px 10px transparent, 4px 4px transparent, 4px 10px transparent, 10px 4px transparent;
+    text-align: center;
+    color: transparent;
+}
+
+#intro_ctnr {
+    font-size: 10em;
+    
+    font-family: 'Kanit', sans-serif;
+
+    display: flex;
+    
+    animation-duration: 1.5s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+      margin-right: 15%;
+      font-size: 12em;
+    }
+  
+    to {
+      margin-right: 0%;
+      font-size: 10em;
+    }
+}
+
+#trax {
+    position: absolute;
+    left: 0;
+    top: calc(50% - 130px);
+}
+
+#wiper {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    right: 100vw;
+
+    animation-duration: 1.5s;
+    animation-delay: 5s;
+    animation-name: wipe;
+    animation-fill-mode: forwards;
+}
+
+@keyframes wipe {
+    from {
+      right: 100;
+    }
+  
+    to {
+      right: 0;
+    }
+}
+
+#lines {
+    font-family: 'Bitter', serif;
+    font-size: 5em;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    z-index: 50;
+
+    transition: 1s ease-in;
+}
