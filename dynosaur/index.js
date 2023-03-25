@@ -5,12 +5,17 @@ let text_color = `hsl(${(rand360 + 180) % 360} 90% 70%)`;
 document.body.style.background = background_color;
 document.getElementById("intro_title").style.color = text_color;
 document.getElementById("wiper").style.backgroundColor = text_color;
-document.getElementById("wiper_circle").style.backgroundColor = background_color;
+document.getElementById("wiper_circle").style.backgroundColor =
+  background_color;
 document.getElementById("wiper_finish").style.backgroundColor = text_color;
 document.getElementById("lines").style.color = background_color;
 document.getElementById("lines_2").style.color = text_color;
-[...document.getElementsByClassName('line')].forEach((x) => x.style.backgroundColor = text_color);
-[...document.getElementsByClassName('line_2')].forEach((x) => x.style.backgroundColor = background_color);
+[...document.getElementsByClassName("line")].forEach(
+  (x) => (x.style.backgroundColor = text_color)
+);
+[...document.getElementsByClassName("line_2")].forEach(
+  (x) => (x.style.backgroundColor = background_color)
+);
 
 const intro_title = "DYNOSAUR";
 
@@ -41,9 +46,11 @@ for (let k = 0; k < 7; k++) {
     track.src = "trax.png";
     track.style.width = "10vw";
     track.style.position = "absolute";
-    track.style.transform = `translateX(${k * (100 / 7) + 12.5 / 7
-      }vw) translateY(${(Math.random() - 0.5) * 10}em) rotate(${Math.random() * 40 + 70
-      }deg)`;
+    track.style.transform = `translateX(${
+      k * (100 / 7) + 12.5 / 7
+    }vw) translateY(${(Math.random() - 0.5) * 10}em) rotate(${
+      Math.random() * 40 + 70
+    }deg)`;
     document.getElementById("trax").appendChild(track);
   }, 3000 + k * 200);
 }
