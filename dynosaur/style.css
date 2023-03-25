@@ -23,7 +23,7 @@ body {
 }
 
 #intro_ctnr {
-    font-size: 10em;
+    font-size: 8em;
     
     font-family: 'Kanit', sans-serif;
 
@@ -36,19 +36,19 @@ body {
 @keyframes slidein {
     from {
       margin-right: 15%;
-      font-size: 12em;
+      font-size: 10em;
     }
   
     to {
       margin-right: 0%;
-      font-size: 10em;
+      font-size: 8em;
     }
 }
 
 #trax {
     position: absolute;
     left: 0;
-    top: calc(50% - 130px);
+    top: calc(50% - 5vw);
 }
 
 #wiper {
@@ -65,7 +65,7 @@ body {
 
 @keyframes wipe {
     from {
-      right: 100;
+      right: 100vw;
     }
   
     to {
@@ -73,16 +73,104 @@ body {
     }
 }
 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 #lines {
     font-family: 'Bitter', serif;
-    font-size: 5em;
+    font-size: 4em;
 
-    display: none;
+    position: absolute;
+
+    visibility: hidden;
+
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
     z-index: 50;
+}
 
-    transition: 1s ease-in;
+#pants {
+    position: absolute;
+    left: 30vw;
+    top: calc(50vh - 20vw);
+}
+
+.line {
+    text-align: center;
+    position: absolute;
+    white-space: nowrap; 
+}
+
+#wiper_circle {
+    z-index: 100;
+
+    height: 1px;
+    width: 1px;
+    border-radius: 50%;
+    position: absolute;
+    right: 50vw;
+    top: 50vh;
+
+    transform-origin: 50% 50%;
+
+    animation-duration: 2s;
+    animation-delay: 13s;
+    animation-name: wipe_circle;
+    animation-fill-mode: forwards;
+}
+
+@keyframes wipe_circle {
+    from {
+        transform: scale(100, 100);
+    }
+  
+    to {
+        transform: scale(10000, 10000);
+    }
+}
+
+#lines_2 {
+    font-family: 'Bitter', serif;
+    font-size: 4em;
+
+    position: absolute;
+
+    visibility: hidden;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    z-index: 200;
+}
+
+#shirts {
+    position: absolute;
+    left: 0;
+    top: calc(50% - 20vw);
+
+    z-index: 195;
+}
+
+#wiper_finish {
+    z-index: 300;
+
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    right: 100vw;
+
+    animation-duration: 1.5s;
+    animation-delay: 20s;
+    animation-name: wipe;
+    animation-fill-mode: forwards;
 }
