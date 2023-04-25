@@ -79,7 +79,7 @@
           "rate": 0,
           "resolution": 0.1,
           "timestamp": "2021-10-01T00:00:00+00:00",
-          "type": "area",
+          "type": "other",
           "unit_labels": "million km²",
           "update_interval_seconds": 86400
         },
