@@ -113,12 +113,12 @@ Row.defaultProps =
   Spacer.defaultProps =
   InField.defaultProps =
   StBtn.defaultProps =
-    {
-      theme: {
-        bg: 'white',
-        tc: 'black',
-      },
-    };
+  {
+    theme: {
+      bg: 'white',
+      tc: 'black',
+    },
+  };
 
 const Note = () => {
   return (
@@ -252,12 +252,11 @@ const Main = () => {
     );
   };
 
-  const reset = () => {
+  const reset = async () => {
     setGetStatus(GetEnum.None);
     setStatStatus(GetEnum.None);
     setCommitList([]);
     setStatsList({});
-    setLinkList({});
     setErrMsg('');
   };
 
@@ -281,6 +280,7 @@ const Main = () => {
   };
 
   const getAllCommits = async () => {
+    await reset();
     const repoList = Object.values(linkList);
     let shaSet = {};
     setLoading(true);
@@ -433,12 +433,12 @@ const Main = () => {
   }, [okit]);
 
   useEffect(() => {
-    if (document.cookie === '') {
-      document.cookie = JSON.stringify({ dark: false });
-    } else {
+    try {
       const cookieDM = JSON.parse(document.cookie).dark;
       setDarkMode(cookieDM);
       darkMRef.current.checked = cookieDM;
+    } catch {
+      document.cookie = JSON.stringify({ dark: false });
     }
   }, []);
 
@@ -529,6 +529,7 @@ const Main = () => {
         <Note />
         <Row>
           <StBtn onClick={getAllCommits}>Submit</StBtn>
+          <StBtn onClick={reset}>Reset</StBtn>
           <Spacer />
           {loading && (
             <LoadingImg src='https://github.com/rcos/rcos-branding/blob/master/img/logo-circle-red.png?raw=true' />
