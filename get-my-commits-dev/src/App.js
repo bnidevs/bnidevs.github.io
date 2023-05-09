@@ -113,12 +113,12 @@ Row.defaultProps =
   Spacer.defaultProps =
   InField.defaultProps =
   StBtn.defaultProps =
-  {
-    theme: {
-      bg: 'white',
-      tc: 'black',
-    },
-  };
+    {
+      theme: {
+        bg: 'white',
+        tc: 'black',
+      },
+    };
 
 const Note = () => {
   return (
