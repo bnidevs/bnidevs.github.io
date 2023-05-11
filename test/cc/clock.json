@@ -15,9 +15,6 @@
         "neutral": {
           "color_primary": "#ffffff",
           "color_secondary": "#000000"
-        },
-        "newsfeed": {
-          "separator": " | "
         }
       },
       "langs": [
@@ -162,6 +159,7 @@
         "description": "A newsfeed of hope: good news about climate change.",
         "flavor": "lifeline",
         "lang": "en",
+        "separator": "|",
         "newsfeed": [
           {
             "date": "2023-04-06T14:48:23+00:00",
