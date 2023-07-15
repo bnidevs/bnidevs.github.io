@@ -8,7 +8,7 @@ function sleep(ms) {
 var SEMESTER_START = "2022-08-20T00:00:00Z";
 document.getElementById("datepicker").defaultValue = SEMESTER_START.substring(
   0,
-  10
+  10,
 );
 
 document.getElementById("addrepo").addEventListener("click", () => {
@@ -53,7 +53,7 @@ var download = (filename, text) => {
   var element = document.createElement("a");
   element.setAttribute(
     "href",
-    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text),
   );
   element.setAttribute("download", filename);
 
@@ -98,7 +98,7 @@ document.getElementById("download").addEventListener("click", () => {
       (personname.length == 0 ? "" : "\n") +
       projname +
       "\n\nCommits:\n" +
-      alllinks.reverse().join("\n")
+      alllinks.reverse().join("\n"),
   );
 });
 
@@ -136,7 +136,7 @@ var getcommitlinks = async (branchlatest) => {
       {
         method: "GET",
         headers: headerobj,
-      }
+      },
     )
       .then((resp) => resp.json())
       .then((data) => {
@@ -291,10 +291,10 @@ var main = () => {
       repolinks.map(async (repolink) => {
         let owner = repolink.substring(
           repolink.indexOf("github.com") + 11,
-          repolink.indexOf("/", repolink.indexOf("github.com") + 11)
+          repolink.indexOf("/", repolink.indexOf("github.com") + 11),
         );
         let repo = repolink.substring(
-          repolink.indexOf(owner) + owner.length + 1
+          repolink.indexOf(owner) + owner.length + 1,
         );
 
         let token = document.getElementById("inputtoken").value.trim();
@@ -314,7 +314,7 @@ var main = () => {
             datelimit = SEMESTER_START;
           } else {
             datelimit = new Date(
-              document.getElementById("datepicker").value + "T00:00:00Z"
+              document.getElementById("datepicker").value + "T00:00:00Z",
             ).toISOString();
           }
         }
@@ -329,7 +329,7 @@ var main = () => {
             {
               method: "GET",
               headers: headerobj,
-            }
+            },
           )
             .then((response) => response.json())
             .then((branches) => {
@@ -357,7 +357,7 @@ var main = () => {
               });
             });
         });
-      })
+      }),
     ).then(async () => {
       if (document.getElementById("statscheckbox").checked) {
         Promise.all(Object.keys(statslinks).map(getstats))

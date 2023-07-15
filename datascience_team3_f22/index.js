@@ -1,5 +1,5 @@
 document.getElementById(
-  "img_container"
+  "img_container",
 ).innerHTML += `<img src="https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/map.png?raw=true" alt="Map" class="overlay">`;
 
 let overlays = {
@@ -21,10 +21,10 @@ let overlays = {
 
 for (let overlay in overlays) {
   document.getElementById(
-    "img_container"
+    "img_container",
   ).innerHTML += `<img id="${overlay}" src="${overlays[overlay]}" alt="${overlay}" class="hidden overlay">`;
   document.getElementById(
-    "toggle_menu"
+    "toggle_menu",
   ).innerHTML += `<input type="checkbox" id="${overlay}_toggle" name="${overlay}"><label for="${overlay}">${overlay}</label><br>`;
 }
 
@@ -42,7 +42,7 @@ for (let toggle of toggles) {
 
 const vw = Math.max(
   document.documentElement.clientWidth || 0,
-  window.innerWidth || 0
+  window.innerWidth || 0,
 );
 let cw = 0;
 document.querySelectorAll(".overlay").forEach((k) => {

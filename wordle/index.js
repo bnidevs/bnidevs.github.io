@@ -1,7 +1,7 @@
 let accepted_words = null;
 
 fetch(
-  "https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt"
+  "https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt",
 )
   .then((resp) => resp.text())
   .then((data) => data.split("\n"))
@@ -12,7 +12,7 @@ fetch(
 let all_words = null;
 
 fetch(
-  "https://gist.githubusercontent.com/cfreshman/cdcdf777450c5b5301e439061d29694c/raw/de1df631b45492e0974f7affe266ec36fed736eb/wordle-allowed-guesses.txt"
+  "https://gist.githubusercontent.com/cfreshman/cdcdf777450c5b5301e439061d29694c/raw/de1df631b45492e0974f7affe266ec36fed736eb/wordle-allowed-guesses.txt",
 )
   .then((resp) => resp.text())
   .then((data) => data.split("\n"))
@@ -85,7 +85,7 @@ var satisfy = (w) => {
       for (let i = 0; i < v.length; i++) {
         if (v[i] >= 0 && w[v[i]] != k) {
           console.log(
-            "eliminated: " + w + " -- " + w[i] + " is in place of " + k
+            "eliminated: " + w + " -- " + w[i] + " is in place of " + k,
           );
           return false;
         }

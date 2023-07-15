@@ -41,7 +41,7 @@ const LastYear = () => {
 
 const ISODate = (d) => {
   let localISO = new Date(
-    d.getTime() - d.getTimezoneOffset() * 60000
+    d.getTime() - d.getTimezoneOffset() * 60000,
   ).toISOString();
   return localISO.split('T')[0];
 };
@@ -248,7 +248,7 @@ const Main = () => {
       commitList
         .map((c) => c.html_url)
         .reverse()
-        .join('\n')
+        .join('\n'),
     );
   };
 
@@ -365,7 +365,7 @@ const Main = () => {
         });
 
         return branchCommits;
-      })
+      }),
     )
       .then((bCommits) => {
         bCommits.forEach((branch) => {
@@ -411,7 +411,7 @@ const Main = () => {
         });
 
         statsList[c.sha] = [a, d];
-      })
+      }),
     ).then(() => {
       setStatStatus(GetEnum.Success);
     });
@@ -613,7 +613,7 @@ const Main = () => {
                   }
                   return `color-${Math.min(
                     Math.floor(Math.log2(value.count)),
-                    4
+                    4,
                   )}`;
                 }}
               />

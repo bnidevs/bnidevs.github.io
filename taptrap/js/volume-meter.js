@@ -24,7 +24,7 @@ document.body.addEventListener("mouseenter", function (event) {
       },
     },
     streamgood,
-    streamnotgood
+    streamnotgood,
   );
 });
 

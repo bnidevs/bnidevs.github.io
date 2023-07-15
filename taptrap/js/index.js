@@ -164,9 +164,12 @@ $(function () {
 
       //TODO should probably rename recordTime to something about beats
 
-      timeoutId = setTimeout(function () {
-        $("#recordButton").click();
-      }, parseInt($("#recordTime").val() * BEAT_MULTIPLIER));
+      timeoutId = setTimeout(
+        function () {
+          $("#recordButton").click();
+        },
+        parseInt($("#recordTime").val() * BEAT_MULTIPLIER),
+      );
     } else {
       pendingSound = await Recorder.stop();
 
