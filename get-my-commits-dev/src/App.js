@@ -33,6 +33,12 @@ const GetBaseDate = () => {
   return BaseDates[mp[which]];
 };
 
+const CalDates = {
+  [BaseDates.Spring]: new Date(new Date().getFullYear(), 0, 1),
+  [BaseDates.Summer]: new Date(new Date().getFullYear(), 4, 1),
+  [BaseDates.Fall]: new Date(new Date().getFullYear(), 7, 1)
+}
+
 const LastYear = () => {
   let today = new Date();
   today.setFullYear(today.getFullYear() - 1);
@@ -280,7 +286,7 @@ const Main = () => {
   };
 
   const getAllCommits = async () => {
-    await reset();
+    //await reset();
     const repoList = Object.values(linkList);
     let shaSet = {};
     setLoading(true);
@@ -313,6 +319,7 @@ const Main = () => {
         })
         .then(() => {
           setLoading(false);
+          fetch(MetricLinks.Queries);
           setGetStatus(GetEnum.Success);
         });
     } catch (e) {
@@ -343,7 +350,7 @@ const Main = () => {
       repo: repoPath[1],
     });
 
-    branches = branches.map((b) => b.name);
+    branches = branches.map((b) => b.commit.sha);
 
     return Promise.all(
       branches.map(async (b) => {
@@ -444,6 +451,10 @@ const Main = () => {
 
   useEffect(() => {
     setBaseDate(GetBaseDate());
+  }, []);
+
+  useEffect(() => {
+    fetch(MetricLinks.Visits);
   }, []);
 
   const dmTheme = {
@@ -593,7 +604,7 @@ const Main = () => {
             <Row>
               <CalendarHeatmap
                 id='cal-heatmap'
-                startDate={baseDate}
+                startDate={CalDates[baseDate]}
                 endDate={new Date()}
                 values={getDateCount()}
                 gutterSize={2}
