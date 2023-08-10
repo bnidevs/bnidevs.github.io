@@ -36,8 +36,8 @@ const GetBaseDate = () => {
 const CalDates = {
   [BaseDates.Spring]: new Date(new Date().getFullYear(), 0, 1),
   [BaseDates.Summer]: new Date(new Date().getFullYear(), 4, 1),
-  [BaseDates.Fall]: new Date(new Date().getFullYear(), 7, 1)
-}
+  [BaseDates.Fall]: new Date(new Date().getFullYear(), 7, 1),
+};
 
 const LastYear = () => {
   let today = new Date();
