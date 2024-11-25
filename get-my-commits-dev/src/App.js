@@ -468,7 +468,9 @@ const Main = () => {
     <ThemeProvider theme={darkMode ? dmTheme : {}}>
       <Col className='main'>
         <Row>
-          <a href="https://bnidevs.github.io"><button>&lt; Back</button></a>
+          <a href='https://bnidevs.github.io'>
+            <button>&lt; Back</button>
+          </a>
         </Row>
         <Spacer />
         <Row>
