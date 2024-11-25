@@ -1,6 +1,5 @@
-document.getElementById(
-  "img_container",
-).innerHTML += `<img src="https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/map.png?raw=true" alt="Map" class="overlay">`;
+document.getElementById("img_container").innerHTML +=
+  `<img src="https://github.com/ITWSDataScience/Group3_Fall2022/blob/main/map.png?raw=true" alt="Map" class="overlay">`;
 
 let overlays = {
   Population:
@@ -20,12 +19,10 @@ let overlays = {
 };
 
 for (let overlay in overlays) {
-  document.getElementById(
-    "img_container",
-  ).innerHTML += `<img id="${overlay}" src="${overlays[overlay]}" alt="${overlay}" class="hidden overlay">`;
-  document.getElementById(
-    "toggle_menu",
-  ).innerHTML += `<input type="checkbox" id="${overlay}_toggle" name="${overlay}"><label for="${overlay}">${overlay}</label><br>`;
+  document.getElementById("img_container").innerHTML +=
+    `<img id="${overlay}" src="${overlays[overlay]}" alt="${overlay}" class="hidden overlay">`;
+  document.getElementById("toggle_menu").innerHTML +=
+    `<input type="checkbox" id="${overlay}_toggle" name="${overlay}"><label for="${overlay}">${overlay}</label><br>`;
 }
 
 let toggles = document.querySelectorAll("input[type=checkbox]");
