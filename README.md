@@ -1,4 +1,3 @@
-# [bnidevs.github.io](https://bnidevs.github.io)
 Random Static Hosting
 
 - [Soda Rankings](https://bnidevs.github.io/sodas)
@@ -8,3 +7,7 @@ Random Static Hosting
 - [taptrap](https://bnidevs.github.io/taptrap)
 - [Data Science Visualization](https://bnidevs.github.io/datascience_team3_f22)
 - [Text Field](https://bnidevs.github.io/text-editor)
+
+-----
+
+[Source](https://github.com/bnidevs/bnidevs.github.io) made with ❤️
