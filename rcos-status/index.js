@@ -29,6 +29,8 @@ Object.keys(m).map((k) => {
   fetch(m[k].link, {
     mode: "no-cors",
   }).then((response) => {
+    console.log(response);
+    console.log(response.status);
     document.querySelector(`.${k} .status`).innerText = response.status;
   });
 });
