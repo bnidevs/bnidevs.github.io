@@ -8,4 +8,6 @@ html, body {
     outline: 2px gray solid;
     box-shadow: 2.0px 4.0px 4.0px hsl(0deg 0% 0% / 0.44);
     font-size: 3em;
+    width: 500px;
+    border-radius: 2px;
 }
