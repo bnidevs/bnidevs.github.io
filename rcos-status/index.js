@@ -25,8 +25,8 @@ const m = {
   },
 };
 
-Object.keys(m).map((k) => {
-  fetch(m[k]["link"]).then((response) => {
-    document.querySelector(`.${k}.status`).innerText = response.status;
-  });
-});
+Object.keys(m).map(k => {
+    fetch(m[k].link).then((response)=>{
+        document.querySelector(`.${k}.status`).innerText = response.status;
+    });
+})
