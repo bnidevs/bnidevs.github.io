@@ -28,7 +28,7 @@ const m = {
 Object.keys(m).map((k) => {
   fetch(m[k].link, {
     cache: "no-cache",
-    mode: "no-cors"
+    mode: "no-cors",
   }).then((response) => {
     console.log(response);
     console.log(response.status);
