@@ -13,7 +13,7 @@ html, body {
     padding: 20px;
     margin: 20px;
 
-    display: row;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
