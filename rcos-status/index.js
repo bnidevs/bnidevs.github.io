@@ -32,6 +32,6 @@ Object.keys(m).map((k) => {
   }).then((response) => {
     console.log(response);
     console.log(response.status);
-    document.querySelector(`.${k} .status`).innerText = "&#128994; 200 OK";
+    document.querySelector(`.${k} .status`).innerHTML = "&#128994; 200 OK";
   });
 });
