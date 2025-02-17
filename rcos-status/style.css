@@ -12,4 +12,12 @@ html, body {
     border-radius: 2px;
     padding: 20px;
     margin: 20px;
+
+    display: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status {
+    font-size: 2em;
 }
