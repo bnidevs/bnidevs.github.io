@@ -1,0 +1,74 @@
+.scroll-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 90vw;
+	height: 20vh;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	background-color: lightgray;
+	
+	display: flex;
+	align-items: center;
+}
+
+.scroll-spacer {
+	min-width: 70vw;
+	height: 1px;
+	background-color: red;
+}
+
+.element {
+	min-width: 100px;
+	height: 100px;
+	outline: 1px solid black;
+	background-color: rgba(0,0,255,0.1);
+}
+
+.absolute {
+	position: absolute;
+}
+
+.relative {
+	position: relative;
+}
+
+.guideline {
+	height: 200vh;
+	width: 2px;
+	background-color: rgb(255,255,255);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.attachment-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,0);
+	z-index: 10;
+	display: flex;
+	align-items: center;
+}
+
+.attachment-element {
+	min-width: 30vw;
+	height: 100px;
+	outline: 1px solid black;
+	background-color: rgba(0,255,0,0.1);
+}
+
+.attachment-spacer {
+	min-width: 50px;
+	height: 1px;
+	background-color: red;
+}
+
+.puzzle-rules {
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	transform: translate(-50%, 0);
+}
