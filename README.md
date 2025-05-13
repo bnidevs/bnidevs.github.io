@@ -15,6 +15,7 @@ Career Projects
 - [Boost and measure interactivity across more streaming TV video ad supply](https://advertising.amazon.com/resources/whats-new/interactive-video-ad-enhancements)
 - [Amazon Ads announces three new Streaming TV ad formats ahead of debut upfront presentation](https://advertising.amazon.com/library/news/amazon-ads-announces-three-new-streaming-tv-ad-formats)
 - [Interactive ads expand availability across streaming TV into Prime Video](https://advertising.amazon.com/resources/whats-new/interactive-ads-expand-across-streaming-tv-into-prime-video)
+- [Amazon Drops New Interactive and Contextual CTV Ad Formats](https://www.adweek.com/commerce/amazon-drops-3-new-ctv-ad-formats-ahead-of-its-upfront-presentation/)
 
 -----
 
