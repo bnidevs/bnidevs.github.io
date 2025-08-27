@@ -343,9 +343,9 @@ const Main = () => {
         since: baseDate.toISOString(),
       });
     } catch (e) {
-      setReposNotFound([...reposNotFound, `${repoPath[0]}/${repoPath[1]}`])
+      setReposNotFound([...reposNotFound, `${repoPath[0]}/${repoPath[1]}`]);
       return [];
-    };
+    }
 
     mainCommits.forEach((c) => {
       shaSet[c.commit.tree.sha] = 1;
@@ -564,13 +564,12 @@ const Main = () => {
         {reposNotFound.length > 0 && (
           <Col>
             <Row className='warning'>
-              These repos were not found, either due to spelling errors or because they are private
+              These repos were not found, either due to spelling errors or
+              because they are private
             </Row>
             <Spacer />
             {reposNotFound.map((r) => (
-              <Row
-                key={r}
-              >
+              <Row key={r}>
                 <Spacer />
                 {r}
               </Row>
