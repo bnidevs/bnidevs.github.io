@@ -259,7 +259,7 @@ const Main = () => {
     );
   };
 
-  const reset = async () => {
+  const reset = () => {
     setGetStatus(GetEnum.None);
     setStatStatus(GetEnum.None);
     setCommitList([]);
@@ -288,7 +288,6 @@ const Main = () => {
   };
 
   const getAllCommits = async () => {
-    //await reset();
     const repoList = Object.values(linkList);
     let shaSet = {};
     setLoading(true);
@@ -553,8 +552,19 @@ const Main = () => {
         )}
         <Note />
         <Row>
-          <StBtn onClick={getAllCommits}>Submit</StBtn>
-          <StBtn onClick={reset}>Reset</StBtn>
+        </Row>
+        <Spacer />
+        <Row>
+          {
+            getStatus === GetEnum.None && (
+              <StBtn onClick={getAllCommits}>Submit</StBtn>
+            )
+          }
+          {
+            getStatus !== GetEnum.None && (
+              <StBtn onClick={reset}>Reset</StBtn>
+            )
+          }
           <Spacer />
           {loading && (
             <LoadingImg src='https://github.com/rcos/rcos-branding/blob/master/img/logo-circle-red.png?raw=true' />
