@@ -551,20 +551,13 @@ const Main = () => {
           </>
         )}
         <Note />
-        <Row>
-        </Row>
+        <Row></Row>
         <Spacer />
         <Row>
-          {
-            getStatus === GetEnum.None && (
-              <StBtn onClick={getAllCommits}>Submit</StBtn>
-            )
-          }
-          {
-            getStatus !== GetEnum.None && (
-              <StBtn onClick={reset}>Reset</StBtn>
-            )
-          }
+          {getStatus === GetEnum.None && (
+            <StBtn onClick={getAllCommits}>Submit</StBtn>
+          )}
+          {getStatus !== GetEnum.None && <StBtn onClick={reset}>Reset</StBtn>}
           <Spacer />
           {loading && (
             <LoadingImg src='https://github.com/rcos/rcos-branding/blob/master/img/logo-circle-red.png?raw=true' />

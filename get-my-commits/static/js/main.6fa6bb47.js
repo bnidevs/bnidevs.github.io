@@ -18443,14 +18443,12 @@
             [i, a] = n.split(/ /),
             l = Object.assign({ method: i, url: a }, o);
           (we.has(r) || we.set(r, new Map()),
-            we
-              .get(r)
-              .set(e, {
-                scope: r,
-                methodName: e,
-                endpointDefaults: l,
-                decorations: s,
-              }));
+            we.get(r).set(e, {
+              scope: r,
+              methodName: e,
+              endpointDefaults: l,
+              decorations: s,
+            }));
         }
       const _e = {
         has(e, t) {
