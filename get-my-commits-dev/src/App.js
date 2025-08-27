@@ -231,6 +231,7 @@ const Main = () => {
   const [statStatus, setStatStatus] = useState(GetEnum.None);
   const [errMsg, setErrMsg] = useState('');
   const [author, setAuthor] = useState('');
+  const [reposNotFound, setReposNotFound] = useState([]);
   const [calTooltip, setCalTooltip] = useState('');
   const [loading, setLoading] = useState(false);
   const [numRepos, setNumRepos] = useState(1);
@@ -262,6 +263,7 @@ const Main = () => {
     setGetStatus(GetEnum.None);
     setStatStatus(GetEnum.None);
     setCommitList([]);
+    setReposNotFound([]);
     setStatsList({});
     setErrMsg('');
   };
@@ -332,12 +334,18 @@ const Main = () => {
     const repoPath = new URL(l).pathname.replace(/^\/|\/$/g, '').split('/');
     let shaSet = {};
     let allCommits = [];
-    const mainCommits = await okit.paginate(okit.rest.repos.listCommits, {
-      owner: repoPath[0],
-      repo: repoPath[1],
-      author: author,
-      since: baseDate.toISOString(),
-    });
+    let mainCommits;
+    try {
+      mainCommits = await okit.paginate(okit.rest.repos.listCommits, {
+        owner: repoPath[0],
+        repo: repoPath[1],
+        author: author,
+        since: baseDate.toISOString(),
+      });
+    } catch (e) {
+      setReposNotFound([...reposNotFound, `${repoPath[0]}/${repoPath[1]}`])
+      return [];
+    };
 
     mainCommits.forEach((c) => {
       shaSet[c.commit.tree.sha] = 1;
@@ -553,9 +561,25 @@ const Main = () => {
           )}
         </Row>
         <Spacer />
+        {reposNotFound.length > 0 && (
+          <Col>
+            <Row className='warning'>
+              These repos were not found, either due to spelling errors or because they are private
+            </Row>
+            <Spacer />
+            {reposNotFound.map((r) => (
+              <Row
+                key={r}
+              >
+                <Spacer />
+                {r}
+              </Row>
+            ))}
+          </Col>
+        )}
         <Spacer />
         <Spacer />
-        {getStatus === GetEnum.Success && (
+        {getStatus === GetEnum.Success && commitList.length > 0 && (
           <Col>
             <Row>
               <StBtn onClick={copyCommits}>Copy</StBtn>

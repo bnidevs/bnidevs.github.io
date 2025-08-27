@@ -5,7 +5,7 @@
 }
 
 .warning {
-  color: red;
+  color: red !important;
 }
 
 .react-calendar-heatmap {
