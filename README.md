@@ -20,4 +20,10 @@ Career Projects
 
 -----
 
+Blog
+
+- [How Valve Ran One of the Smartest A/B Tests in Gaming History — and Never Told Anyone](https://bnidevs.github.io/blog/dota_facets.html)
+
+-----
+
 [Source](https://github.com/bnidevs/bnidevs.github.io) made with ❤️
