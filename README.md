@@ -23,6 +23,8 @@ Career Projects
 Blog
 
 - [How Valve Ran One of the Smartest A/B Tests in Gaming History — and Never Told Anyone](https://bnidevs.github.io/blog/dota_facets.html)
+- [Planned obsolescence harms the consumer](https://bnidevs.github.io/blog/planned_obsolescence.html)
+- [How Parasite and Squid Game disprove the get-rich-quick myth](https://bnidevs.github.io/blog/squid_game.html)
 
 -----
 
