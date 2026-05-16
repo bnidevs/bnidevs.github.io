@@ -18,6 +18,9 @@ Career Projects
 - [Amazon Ads announces three new Streaming TV ad formats ahead of debut upfront presentation](https://advertising.amazon.com/library/news/amazon-ads-announces-three-new-streaming-tv-ad-formats)
 - [Interactive ads expand availability across streaming TV into Prime Video](https://advertising.amazon.com/resources/whats-new/interactive-ads-expand-across-streaming-tv-into-prime-video)
 - [Amazon Drops New Interactive and Contextual CTV Ad Formats](https://www.adweek.com/commerce/amazon-drops-3-new-ctv-ad-formats-ahead-of-its-upfront-presentation/)
+- [Amazon announces AI-powered pause ads and new advertising formats for Prime Video](https://advertising.amazon.com/library/news/ai-pause-format-prime-video)
+- [Engage viewers with interactive pause ads when they take a break on Prime Video](https://advertising.amazon.com/resources/whats-new/engage-viewers-with-interactive-pause-ads)
+- [Prime Sports Introduces New Suite of Interactive Features for the NBA on Prime Designed to Enhance the Fan Experience and Heighten Engagement](https://press.amazonmgmstudios.com/us/en/press-release/prime-sports-introduces-new-suite-of-interactive-f)
 
 -----
 
