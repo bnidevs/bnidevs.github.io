@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">▦ KANBAN</div>
+    <button class="btn-add-col" id="addColumnBtn" title="Add column">+ Column</button>
+  </header>
+  <main id="board" class="board"></main>
+
+  <!-- Task modal -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">New Task</h3>
+        <button class="modal-close" id="modalClose">×</button>
+      </div>
+      <div class="modal-body">
+        <label for="taskTitleInput">Title</label>
+        <input type="text" id="taskTitleInput" placeholder="What needs doing?" autofocus>
+        <label for="taskDescInput">Description</label>
+        <textarea id="taskDescInput" rows="3" placeholder="Optional details..."></textarea>
+        <label for="taskPointsInput">Points</label>
+        <input type="number" id="taskPointsInput" min="0" value="0" placeholder="0">
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" id="modalCancel">Cancel</button>
+        <button class="btn-save" id="modalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
