@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teleprompter</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- SETUP -->
+<div id="setup">
+  <h1>Teleprompter</h1>
+  <textarea id="inputText" placeholder="Paste your script here..."></textarea>
+  <div class="mode-select">
+    <input type="radio" name="mode" id="modeFixed" value="fixed" checked>
+    <label for="modeFixed">Fixed Scroll</label>
+    <input type="radio" name="mode" id="modeAudio" value="audio">
+    <label for="modeAudio">Audio Scroll</label>
+  </div>
+  <div id="chromeWarning" class="chrome-warning" style="display:none;">
+    ⚠ Audio scroll uses the Web Speech API, which only works reliably in Chrome.
+  </div>
+  <button id="start" disabled>Start</button>
+</div>
+
+<!-- PROMPTER -->
+<div id="prompter">
+  <div class="center-line visible"></div>
+  <div class="scroll-region">
+    <div id="text-display"></div>
+  </div>
+  <div class="controls">
+    <div class="ctrl-group">
+      <span>Size</span>
+      <input type="range" id="sizeSlider" min="1" max="6" step="0.25" value="2.5">
+    </div>
+    <div class="ctrl-group" id="speedGroup">
+      <span>Speed</span>
+      <input type="range" id="speedSlider" min="0.2" max="5" step="0.1" value="1">
+    </div>
+    <div class="ctrl-group" id="micGroup" style="display:none;">
+      <div class="mic-indicator" id="micDot"></div>
+      <span id="micLabel">Mic off</span>
+    </div>
+    <div class="spacer"></div>
+    <button id="pauseBtn">Pause</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

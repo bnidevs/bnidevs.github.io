@@ -1,0 +1,318 @@
+:root {
+  --bg: #0a0a0a;
+  --text: #e0e0e0;
+  --accent: #ff3b30;
+  --accent-dim: #ff3b3040;
+  --surface: #161616;
+  --border: #2a2a2a;
+  --muted: #666;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ── SETUP SCREEN ── */
+#setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#setup h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2rem;
+}
+
+textarea {
+  width: 100%;
+  max-width: 700px;
+  height: 280px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  padding: 1.2rem;
+  resize: vertical;
+  line-height: 1.7;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+textarea:focus {
+  border-color: var(--accent);
+}
+
+textarea::placeholder {
+  color: var(--muted);
+}
+
+.mode-select {
+  display: flex;
+  gap: 0;
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mode-select label {
+  padding: 0.7rem 1.6rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-right: 1px solid var(--border);
+  user-select: none;
+  color: var(--muted);
+}
+
+.mode-select label:last-child { border-right: none; }
+
+.mode-select input { display: none; }
+
+.mode-select input:checked + label {
+  background: var(--accent);
+  color: #fff;
+}
+
+button#start {
+  margin-top: 1.5rem;
+  padding: 0.8rem 3rem;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+button#start:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+button#start:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.chrome-warning {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.75rem;
+  color: #f5a623;
+  border: 1px solid #f5a62350;
+  border-radius: 4px;
+  background: #f5a62310;
+  max-width: 700px;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* ── PROMPTER SCREEN ── */
+#prompter {
+  display: none;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+#prompter.active {
+  display: flex;
+}
+
+.scroll-region {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fade masks at top/bottom */
+.scroll-region::before,
+.scroll-region::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.scroll-region::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+}
+
+.scroll-region::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+
+#text-display {
+  padding: 50vh 2rem 50vh 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 2.5rem;
+  transition: font-size 0.15s ease;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+/* Fixed mode: line-by-line highlight */
+#text-display .line {
+  color: #444;
+  transition: color 0.2s ease;
+}
+
+#text-display .line.active {
+  color: #fff;
+}
+
+/* Audio mode: word-by-word spans */
+#text-display .word {
+  transition: color 0.15s, opacity 0.15s;
+  color: #444;
+  opacity: 1;
+}
+
+#text-display .word.spoken {
+  color: #fff;
+}
+
+#text-display .word.current {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+#text-display .word.upcoming {
+  color: #444;
+}
+
+/* Center line indicator */
+.center-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-dim);
+  z-index: 1;
+  pointer-events: none;
+  display: none;
+}
+
+.center-line.visible { display: block; }
+
+/* ── CONTROLS BAR ── */
+.controls {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  z-index: 10;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.controls .ctrl-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controls input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+#sizeSlider { width: 100px; }
+#speedSlider { width: 100px; }
+
+.controls button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.controls button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.mic-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex-shrink: 0;
+}
+
+.mic-indicator.live {
+  background: var(--accent);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-dim); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+.spacer { flex: 1; }
