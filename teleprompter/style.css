@@ -186,14 +186,18 @@ button#start:disabled {
   white-space: pre-wrap;
 }
 
-/* Fixed mode: line-by-line highlight */
-#text-display .line {
+/* Fixed mode: word-level highlight (respects text wrapping) */
+#text-display .fw {
   color: #444;
-  transition: color 0.2s ease;
+  transition: color 0.15s ease;
 }
 
-#text-display .line.active {
+#text-display .fw.active {
   color: #fff;
+}
+
+#text-display .line {
+  color: #444;
 }
 
 /* Audio mode: word-by-word spans */
@@ -232,13 +236,11 @@ button#start:disabled {
 
 .center-line.visible { display: block; }
 
-/* ── CONTROLS BAR ── */
+/* ── CONTROLS BARS ── */
 .controls {
   position: fixed;
-  bottom: 0;
   left: 0; right: 0;
   background: var(--surface);
-  border-top: 1px solid var(--border);
   padding: 0.8rem 1.5rem;
   display: flex;
   align-items: center;
@@ -248,6 +250,17 @@ button#start:disabled {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+.controls-top {
+  top: 0;
+  border-bottom: 1px solid var(--border);
+  justify-content: flex-end;
+}
+
+.controls-bottom {
+  bottom: 0;
+  border-top: 1px solid var(--border);
 }
 
 .controls .ctrl-group {
@@ -315,4 +328,3 @@ button#start:disabled {
   50% { box-shadow: 0 0 0 6px transparent; }
 }
 
-.spacer { flex: 1; }

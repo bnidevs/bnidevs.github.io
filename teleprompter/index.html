@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Teleprompter</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -25,13 +25,17 @@
   <button id="start" disabled>Start</button>
 </div>
 
-<!-- PROMPTER -->
+<!-- PROMPTER — controls are siblings, not nested in a flex parent -->
 <div id="prompter">
-  <div class="center-line visible"></div>
+  <div class="controls controls-top">
+    <button id="pauseBtn">Pause</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+  <div class="center-line"></div>
   <div class="scroll-region">
     <div id="text-display"></div>
   </div>
-  <div class="controls">
+  <div class="controls controls-bottom">
     <div class="ctrl-group">
       <span>Size</span>
       <input type="range" id="sizeSlider" min="1" max="6" step="0.25" value="2.5">
@@ -44,9 +48,6 @@
       <div class="mic-indicator" id="micDot"></div>
       <span id="micLabel">Mic off</span>
     </div>
-    <div class="spacer"></div>
-    <button id="pauseBtn">Pause</button>
-    <button id="resetBtn">Reset</button>
   </div>
 </div>
 
