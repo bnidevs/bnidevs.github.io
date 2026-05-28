@@ -1,21 +1,22 @@
 const $ = (id) => document.getElementById(id);
 
-const inputText = $('inputText');
-const startBtn = $('start');
-const textDisplay = $('text-display');
-const sizeSlider = $('sizeSlider');
-const speedSlider = $('speedSlider');
-const pauseBtn = $('pauseBtn');
-const resetBtn = $('resetBtn');
-const speedGroup = $('speedGroup');
-const micGroup = $('micGroup');
-const micDot = $('micDot');
-const micLabel = $('micLabel');
-const chromeWarning = $('chromeWarning');
+const inputText = $("inputText");
+const startBtn = $("start");
+const textDisplay = $("text-display");
+const sizeSlider = $("sizeSlider");
+const speedSlider = $("speedSlider");
+const pauseBtn = $("pauseBtn");
+const resetBtn = $("resetBtn");
+const speedGroup = $("speedGroup");
+const micGroup = $("micGroup");
+const micDot = $("micDot");
+const micLabel = $("micLabel");
+const chromeWarning = $("chromeWarning");
 
-const isChrome = /Chrome/.test(navigator.userAgent) && !/Edg|OPR/.test(navigator.userAgent);
+const isChrome =
+  /Chrome/.test(navigator.userAgent) && !/Edg|OPR/.test(navigator.userAgent);
 
-let mode = 'fixed';
+let mode = "fixed";
 let scrollAnim = null;
 let paused = false;
 let scrollY = 0;
@@ -39,95 +40,108 @@ function clampScroll() {
 }
 
 // Wheel scroll — works in both modes
-document.addEventListener('wheel', (e) => {
-  if (!$('prompter').classList.contains('active')) return;
-  e.preventDefault();
-  scrollY -= e.deltaY;
-  clampScroll();
-  applyScroll();
-}, { passive: false });
+document.addEventListener(
+  "wheel",
+  (e) => {
+    if (!$("prompter").classList.contains("active")) return;
+    e.preventDefault();
+    scrollY -= e.deltaY;
+    clampScroll();
+    applyScroll();
+  },
+  { passive: false },
+);
 
 // Touch scroll — works in both modes
 let touchStartY = null;
-document.addEventListener('touchstart', (e) => {
-  if (!$('prompter').classList.contains('active')) return;
-  touchStartY = e.touches[0].clientY;
-}, { passive: true });
+document.addEventListener(
+  "touchstart",
+  (e) => {
+    if (!$("prompter").classList.contains("active")) return;
+    touchStartY = e.touches[0].clientY;
+  },
+  { passive: true },
+);
 
-document.addEventListener('touchmove', (e) => {
-  if (!$('prompter').classList.contains('active') || touchStartY === null) return;
-  e.preventDefault();
-  const touchY = e.touches[0].clientY;
-  const delta = touchY - touchStartY;
-  touchStartY = touchY;
-  scrollY += delta;
-  clampScroll();
-  applyScroll();
-}, { passive: false });
+document.addEventListener(
+  "touchmove",
+  (e) => {
+    if (!$("prompter").classList.contains("active") || touchStartY === null)
+      return;
+    e.preventDefault();
+    const touchY = e.touches[0].clientY;
+    const delta = touchY - touchStartY;
+    touchStartY = touchY;
+    scrollY += delta;
+    clampScroll();
+    applyScroll();
+  },
+  { passive: false },
+);
 
-document.addEventListener('touchend', () => {
+document.addEventListener("touchend", () => {
   touchStartY = null;
 });
 
 // ─── SETUP ───
 
-inputText.addEventListener('input', () => {
+inputText.addEventListener("input", () => {
   startBtn.disabled = !inputText.value.trim();
 });
 
 document.querySelectorAll('input[name="mode"]').forEach((r) => {
-  r.addEventListener('change', (e) => {
+  r.addEventListener("change", (e) => {
     mode = e.target.value;
-    if (mode === 'audio' && !isChrome) {
-      chromeWarning.style.display = 'block';
+    if (mode === "audio" && !isChrome) {
+      chromeWarning.style.display = "block";
     } else {
-      chromeWarning.style.display = 'none';
+      chromeWarning.style.display = "none";
     }
   });
 });
 
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener("click", () => {
   const raw = inputText.value.trim();
   if (!raw) return;
 
-  $('setup').style.display = 'none';
-  $('prompter').classList.add('active');
+  $("setup").style.display = "none";
+  $("prompter").classList.add("active");
 
-  if (mode === 'fixed') {
+  if (mode === "fixed") {
     startFixed(raw);
   } else {
     startAudio(raw);
   }
 });
 
-sizeSlider.addEventListener('input', () => {
-  textDisplay.style.fontSize = sizeSlider.value + 'rem';
+sizeSlider.addEventListener("input", () => {
+  textDisplay.style.fontSize = sizeSlider.value + "rem";
 });
 
 // ─── FIXED SCROLL ───
 
 function startFixed(text) {
-  speedGroup.style.display = 'flex';
-  micGroup.style.display = 'none';
+  speedGroup.style.display = "flex";
+  micGroup.style.display = "none";
 
   // Build word-level spans inside line divs, preserving user newlines
-  textDisplay.innerHTML = '';
-  const lines = text.split('\n');
+  textDisplay.innerHTML = "";
+  const lines = text.split("\n");
   const allSpans = [];
 
   lines.forEach((line, lineIdx) => {
-    const div = document.createElement('div');
-    div.className = 'line';
+    const div = document.createElement("div");
+    div.className = "line";
     const lineWords = line.split(/(\s+)/); // keep whitespace chunks
-    if (lineWords.every((w) => w.trim() === '')) {
-      div.innerHTML = '\u00A0';
+    if (lineWords.every((w) => w.trim() === "")) {
+      div.innerHTML = "\u00A0";
     } else {
       lineWords.forEach((chunk) => {
-        if (chunk.trim() === '') {
+        if (chunk.trim() === "") {
           div.appendChild(document.createTextNode(chunk));
         } else {
-          const span = document.createElement('span');
-          span.className = 'fw';
+          const span = document.createElement("span");
+          span.className = "fw";
           span.textContent = chunk;
           div.appendChild(span);
           allSpans.push(span);
@@ -138,9 +152,9 @@ function startFixed(text) {
   });
 
   scrollY = 0;
-  textDisplay.style.transform = 'translateY(0px)';
+  textDisplay.style.transform = "translateY(0px)";
   paused = false;
-  pauseBtn.textContent = 'Pause';
+  pauseBtn.textContent = "Pause";
 
   activeHighlightFn = function updateActiveWords() {
     const center = window.innerHeight / 2;
@@ -148,9 +162,9 @@ function startFixed(text) {
     allSpans.forEach((span) => {
       const rect = span.getBoundingClientRect();
       if (rect.top - tolerance <= center && rect.bottom + tolerance >= center) {
-        span.classList.add('active');
+        span.classList.add("active");
       } else {
-        span.classList.remove('active');
+        span.classList.remove("active");
       }
     });
   };
@@ -171,32 +185,32 @@ function startFixed(text) {
 // ─── AUDIO SCROLL ───
 
 function startAudio(text) {
-  speedGroup.style.display = 'none';
-  micGroup.style.display = 'flex';
+  speedGroup.style.display = "none";
+  micGroup.style.display = "flex";
 
-  const rawLines = text.split('\n');
+  const rawLines = text.split("\n");
   words = [];
   wordEls = [];
-  textDisplay.innerHTML = '';
+  textDisplay.innerHTML = "";
 
   rawLines.forEach((line, lineIdx) => {
     const lineWords = line.split(/\s+/).filter((w) => w.length > 0);
     lineWords.forEach((w) => {
-      const span = document.createElement('span');
-      span.className = 'word upcoming';
-      span.textContent = w + ' ';
+      const span = document.createElement("span");
+      span.className = "word upcoming";
+      span.textContent = w + " ";
       textDisplay.appendChild(span);
       words.push(w);
       wordEls.push(span);
     });
     if (lineIdx < rawLines.length - 1) {
-      textDisplay.appendChild(document.createElement('br'));
+      textDisplay.appendChild(document.createElement("br"));
     }
   });
 
   wordIndex = 0;
   scrollY = 0;
-  textDisplay.style.transform = 'translateY(0px)';
+  textDisplay.style.transform = "translateY(0px)";
 
   activeHighlightFn = highlightCurrent;
   highlightCurrent();
@@ -209,7 +223,7 @@ function startAudio(text) {
   recognition = new SR();
   recognition.continuous = true;
   recognition.interimResults = true;
-  recognition.lang = 'en-US';
+  recognition.lang = "en-US";
 
   recognition.onresult = (e) => {
     if (paused) return;
@@ -228,8 +242,8 @@ function startAudio(text) {
   };
 
   recognition.onerror = (e) => {
-    if (e.error === 'no-speech' || e.error === 'aborted') return;
-    console.warn('Recognition error:', e.error);
+    if (e.error === "no-speech" || e.error === "aborted") return;
+    console.warn("Recognition error:", e.error);
   };
 
   recognition.onend = () => {
@@ -242,8 +256,8 @@ function startAudio(text) {
 
   try {
     recognition.start();
-    micDot.classList.add('live');
-    micLabel.textContent = 'Listening';
+    micDot.classList.add("live");
+    micLabel.textContent = "Listening";
   } catch (e) {
     console.error(e);
   }
@@ -252,7 +266,7 @@ function startAudio(text) {
 // ─── WORD MATCHING ───
 
 function normalize(s) {
-  return s.replace(/[^a-z0-9]/gi, '').toLowerCase();
+  return s.replace(/[^a-z0-9]/gi, "").toLowerCase();
 }
 
 function fuzzy(a, b) {
@@ -272,7 +286,7 @@ function fuzzy(a, b) {
 
 function advanceWord() {
   if (wordIndex < wordEls.length) {
-    wordEls[wordIndex].className = 'word spoken';
+    wordEls[wordIndex].className = "word spoken";
   }
   wordIndex++;
   highlightCurrent();
@@ -281,9 +295,9 @@ function advanceWord() {
 
 function highlightCurrent() {
   wordEls.forEach((el, i) => {
-    if (i < wordIndex) el.className = 'word spoken';
-    else if (i === wordIndex) el.className = 'word current';
-    else el.className = 'word upcoming';
+    if (i < wordIndex) el.className = "word spoken";
+    else if (i === wordIndex) el.className = "word current";
+    else el.className = "word upcoming";
   });
 }
 
@@ -300,43 +314,43 @@ function scrollToWord() {
 
 // ─── CONTROLS ───
 
-pauseBtn.addEventListener('click', () => {
+pauseBtn.addEventListener("click", () => {
   paused = !paused;
-  pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+  pauseBtn.textContent = paused ? "Resume" : "Pause";
 
-  if (mode === 'audio' && recognition) {
+  if (mode === "audio" && recognition) {
     if (paused) {
       recognition.stop();
-      micDot.classList.remove('live');
-      micLabel.textContent = 'Paused';
+      micDot.classList.remove("live");
+      micLabel.textContent = "Paused";
     } else {
       try {
         recognition.start();
       } catch (e) {}
-      micDot.classList.add('live');
-      micLabel.textContent = 'Listening';
+      micDot.classList.add("live");
+      micLabel.textContent = "Listening";
     }
   }
 });
 
-resetBtn.addEventListener('click', () => {
+resetBtn.addEventListener("click", () => {
   if (scrollAnim) cancelAnimationFrame(scrollAnim);
   if (recognition) {
     recognition.stop();
     recognition = null;
   }
   activeHighlightFn = null;
-  $('prompter').classList.remove('active');
-  $('setup').style.display = 'flex';
-  textDisplay.innerHTML = '';
-  textDisplay.style.transform = '';
+  $("prompter").classList.remove("active");
+  $("setup").style.display = "flex";
+  textDisplay.innerHTML = "";
+  textDisplay.style.transform = "";
   scrollY = 0;
   paused = false;
 });
 
-document.addEventListener('keydown', (e) => {
-  if (!$('prompter').classList.contains('active')) return;
-  if (e.code === 'Space') {
+document.addEventListener("keydown", (e) => {
+  if (!$("prompter").classList.contains("active")) return;
+  if (e.code === "Space") {
     e.preventDefault();
     pauseBtn.click();
   }
