@@ -1,21 +1,22 @@
 const $ = (id) => document.getElementById(id);
 
-const inputText = $('inputText');
-const startBtn = $('start');
-const textDisplay = $('text-display');
-const sizeSlider = $('sizeSlider');
-const speedSlider = $('speedSlider');
-const pauseBtn = $('pauseBtn');
-const resetBtn = $('resetBtn');
-const speedGroup = $('speedGroup');
-const micGroup = $('micGroup');
-const micDot = $('micDot');
-const micLabel = $('micLabel');
-const chromeWarning = $('chromeWarning');
+const inputText = $("inputText");
+const startBtn = $("start");
+const textDisplay = $("text-display");
+const sizeSlider = $("sizeSlider");
+const speedSlider = $("speedSlider");
+const pauseBtn = $("pauseBtn");
+const resetBtn = $("resetBtn");
+const speedGroup = $("speedGroup");
+const micGroup = $("micGroup");
+const micDot = $("micDot");
+const micLabel = $("micLabel");
+const chromeWarning = $("chromeWarning");
 
-const isChrome = /Chrome/.test(navigator.userAgent) && !/Edg|OPR/.test(navigator.userAgent);
+const isChrome =
+  /Chrome/.test(navigator.userAgent) && !/Edg|OPR/.test(navigator.userAgent);
 
-let mode = 'fixed';
+let mode = "fixed";
 let scrollAnim = null;
 let paused = false;
 let scrollY = 0;
@@ -26,60 +27,60 @@ let wordEls = [];
 
 // ─── SETUP ───
 
-inputText.addEventListener('input', () => {
+inputText.addEventListener("input", () => {
   startBtn.disabled = !inputText.value.trim();
 });
 
 document.querySelectorAll('input[name="mode"]').forEach((r) => {
-  r.addEventListener('change', (e) => {
+  r.addEventListener("change", (e) => {
     mode = e.target.value;
-    if (mode === 'audio' && !isChrome) {
-      chromeWarning.style.display = 'block';
+    if (mode === "audio" && !isChrome) {
+      chromeWarning.style.display = "block";
     } else {
-      chromeWarning.style.display = 'none';
+      chromeWarning.style.display = "none";
     }
   });
 });
 
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener("click", () => {
   const raw = inputText.value.trim();
   if (!raw) return;
 
-  $('setup').style.display = 'none';
-  $('prompter').classList.add('active');
+  $("setup").style.display = "none";
+  $("prompter").classList.add("active");
 
-  if (mode === 'fixed') {
+  if (mode === "fixed") {
     startFixed(raw);
   } else {
     startAudio(raw);
   }
 });
 
-sizeSlider.addEventListener('input', () => {
-  textDisplay.style.fontSize = sizeSlider.value + 'rem';
+sizeSlider.addEventListener("input", () => {
+  textDisplay.style.fontSize = sizeSlider.value + "rem";
 });
 
 // ─── FIXED SCROLL ───
 
 function startFixed(text) {
-  speedGroup.style.display = 'flex';
-  micGroup.style.display = 'none';
+  speedGroup.style.display = "flex";
+  micGroup.style.display = "none";
 
   // Build line elements preserving user newlines
-  textDisplay.innerHTML = '';
-  const lines = text.split('\n');
+  textDisplay.innerHTML = "";
+  const lines = text.split("\n");
   const lineEls = lines.map((line) => {
-    const div = document.createElement('div');
-    div.className = 'line';
-    div.textContent = line || '\u00A0'; // non-breaking space for empty lines
+    const div = document.createElement("div");
+    div.className = "line";
+    div.textContent = line || "\u00A0"; // non-breaking space for empty lines
     textDisplay.appendChild(div);
     return div;
   });
 
   scrollY = 0;
-  textDisplay.style.transform = 'translateY(0px)';
+  textDisplay.style.transform = "translateY(0px)";
   paused = false;
-  pauseBtn.textContent = 'Pause';
+  pauseBtn.textContent = "Pause";
 
   function updateActiveLines() {
     const center = window.innerHeight / 2;
@@ -88,9 +89,9 @@ function startFixed(text) {
       const lineMid = rect.top + rect.height / 2;
       const distance = Math.abs(lineMid - center);
       if (distance < rect.height / 2 + 4) {
-        el.classList.add('active');
+        el.classList.add("active");
       } else {
-        el.classList.remove('active');
+        el.classList.remove("active");
       }
     });
   }
@@ -113,27 +114,27 @@ function startFixed(text) {
 // ─── AUDIO SCROLL ───
 
 function startAudio(text) {
-  speedGroup.style.display = 'none';
-  micGroup.style.display = 'flex';
+  speedGroup.style.display = "none";
+  micGroup.style.display = "flex";
 
   // Split into words while tracking line breaks
-  const rawLines = text.split('\n');
+  const rawLines = text.split("\n");
   words = [];
   wordEls = [];
-  textDisplay.innerHTML = '';
+  textDisplay.innerHTML = "";
 
   rawLines.forEach((line, lineIdx) => {
     const lineWords = line.split(/\s+/).filter((w) => w.length > 0);
     lineWords.forEach((w) => {
-      const span = document.createElement('span');
-      span.className = 'word upcoming';
-      span.textContent = w + ' ';
+      const span = document.createElement("span");
+      span.className = "word upcoming";
+      span.textContent = w + " ";
       textDisplay.appendChild(span);
       words.push(w);
       wordEls.push(span);
     });
     if (lineIdx < rawLines.length - 1) {
-      textDisplay.appendChild(document.createElement('br'));
+      textDisplay.appendChild(document.createElement("br"));
     }
   });
 
@@ -148,7 +149,7 @@ function startAudio(text) {
   recognition = new SR();
   recognition.continuous = true;
   recognition.interimResults = true;
-  recognition.lang = 'en-US';
+  recognition.lang = "en-US";
 
   recognition.onresult = (e) => {
     if (paused) return;
@@ -167,8 +168,8 @@ function startAudio(text) {
   };
 
   recognition.onerror = (e) => {
-    if (e.error === 'no-speech' || e.error === 'aborted') return;
-    console.warn('Recognition error:', e.error);
+    if (e.error === "no-speech" || e.error === "aborted") return;
+    console.warn("Recognition error:", e.error);
   };
 
   recognition.onend = () => {
@@ -181,8 +182,8 @@ function startAudio(text) {
 
   try {
     recognition.start();
-    micDot.classList.add('live');
-    micLabel.textContent = 'Listening';
+    micDot.classList.add("live");
+    micLabel.textContent = "Listening";
   } catch (e) {
     console.error(e);
   }
@@ -191,7 +192,7 @@ function startAudio(text) {
 // ─── WORD MATCHING ───
 
 function normalize(s) {
-  return s.replace(/[^a-z0-9]/gi, '').toLowerCase();
+  return s.replace(/[^a-z0-9]/gi, "").toLowerCase();
 }
 
 function fuzzy(a, b) {
@@ -211,7 +212,7 @@ function fuzzy(a, b) {
 
 function advanceWord() {
   if (wordIndex < wordEls.length) {
-    wordEls[wordIndex].className = 'word spoken';
+    wordEls[wordIndex].className = "word spoken";
   }
   wordIndex++;
   highlightCurrent();
@@ -220,9 +221,9 @@ function advanceWord() {
 
 function highlightCurrent() {
   wordEls.forEach((el, i) => {
-    if (i < wordIndex) el.className = 'word spoken';
-    else if (i === wordIndex) el.className = 'word current';
-    else el.className = 'word upcoming';
+    if (i < wordIndex) el.className = "word spoken";
+    else if (i === wordIndex) el.className = "word current";
+    else el.className = "word upcoming";
   });
 }
 
@@ -238,42 +239,42 @@ function scrollToWord() {
 
 // ─── CONTROLS ───
 
-pauseBtn.addEventListener('click', () => {
+pauseBtn.addEventListener("click", () => {
   paused = !paused;
-  pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+  pauseBtn.textContent = paused ? "Resume" : "Pause";
 
-  if (mode === 'audio' && recognition) {
+  if (mode === "audio" && recognition) {
     if (paused) {
       recognition.stop();
-      micDot.classList.remove('live');
-      micLabel.textContent = 'Paused';
+      micDot.classList.remove("live");
+      micLabel.textContent = "Paused";
     } else {
       try {
         recognition.start();
       } catch (e) {}
-      micDot.classList.add('live');
-      micLabel.textContent = 'Listening';
+      micDot.classList.add("live");
+      micLabel.textContent = "Listening";
     }
   }
 });
 
-resetBtn.addEventListener('click', () => {
+resetBtn.addEventListener("click", () => {
   if (scrollAnim) cancelAnimationFrame(scrollAnim);
   if (recognition) {
     recognition.stop();
     recognition = null;
   }
-  $('prompter').classList.remove('active');
-  $('setup').style.display = 'flex';
-  textDisplay.innerHTML = '';
-  textDisplay.style.transform = '';
+  $("prompter").classList.remove("active");
+  $("setup").style.display = "flex";
+  textDisplay.innerHTML = "";
+  textDisplay.style.transform = "";
   scrollY = 0;
   paused = false;
 });
 
-document.addEventListener('keydown', (e) => {
-  if (!$('prompter').classList.contains('active')) return;
-  if (e.code === 'Space') {
+document.addEventListener("keydown", (e) => {
+  if (!$("prompter").classList.contains("active")) return;
+  if (e.code === "Space") {
     e.preventDefault();
     pauseBtn.click();
   }
