@@ -1,9 +1,10 @@
 ### Current PRs
 
-| **Lift**    | **Weight** |
-|-------------|------------|
-| Bench Press | 155        |
-| Squat       | 275        |
-| Deadlift    | 385        |
+| **Lift**    | **Weight** | **Date Achieved** |
+|-------------|------------|-------------------|
+| Bench Press | 155        | Jan 25 2025       |
+| Squat       | 275        | May 29 2026       |
+| Deadlift    | 385        | Oct 6 2025        |
+| _Total_     | _815_      |                   |
 
 ### [`Plate Visualizer`](plate-visualizer/)
