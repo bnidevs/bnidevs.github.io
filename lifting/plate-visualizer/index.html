@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barbell Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Barbell Calculator</h1>
+      <div class="total-display">
+        <span id="total-number">45</span><span class="unit">lbs</span>
+      </div>
+    </div>
+
+    <div class="bar-container">
+      <svg id="barbell-svg" viewBox="0 0 700 160" width="100%"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="plates">Select Plates</button>
+      <button class="mode-btn" data-mode="weight">Enter Weight</button>
+    </div>
+
+    <!-- Plates mode -->
+    <div id="plates-panel" class="plates-panel">
+      <div class="section-label">Plates per side · 1000 lb max</div>
+      <!-- rows injected by JS -->
+    </div>
+
+    <!-- Weight mode -->
+    <div id="weight-panel" class="hidden">
+      <div class="section-label">Target weight (lbs)</div>
+      <input type="number" class="weight-input" id="weight-input" min="45" max="1000" step="1" placeholder="45 – 1000" />
+      <div id="weight-messages"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
