@@ -71,6 +71,19 @@ const process = () => {
 
   let current_category = "";
   current_category += '<table class="results">';
+  current_category += `<tr class="results">
+    <th>Email</th>
+    <th>Name</th>
+    <th>Division</th>
+    <th>Gender</th>
+    <th>B1</th>
+    <th>B2</th>
+    <th>B3</th>
+    <th>B4</th>
+    <th>B5</th>
+    <th>Attempts</th>
+    <th>Total</th>
+  </tr>`;
 
   categories.forEach((c) => {
     //console.log(c);
