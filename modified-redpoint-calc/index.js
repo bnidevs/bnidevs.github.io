@@ -13,16 +13,18 @@ const process = () => {
   let data = Papa.parse(upload);
   // console.log(data); // check console for malformed data here
 
-  data = data.data                    // isolate rows
-    .slice(1)                         // remove header
-    .filter(e => e[1].length > 0)     // clear empty rows
-    .map((e) => [                     // total tops
+  data = data.data // isolate rows
+    .slice(1) // remove header
+    .filter((e) => e[1].length > 0) // clear empty rows
+    .map((e) => [
+      // total tops
       ...e,
-      e.reduce((a, cv) => cv.includes('Top') ? a + 1 : a, 0),
+      e.reduce((a, cv) => (cv.includes("Top") ? a + 1 : a), 0),
     ])
-    .map((e) => [                     // total zones
+    .map((e) => [
+      // total zones
       ...e,
-      e.reduce((a, cv) => cv == 'Zone' ? a + 1 : a, 0) + e[28],
+      e.reduce((a, cv) => (cv == "Zone" ? a + 1 : a), 0) + e[28],
     ])
     .map((e) => {
       // cast numbers
