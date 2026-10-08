@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redpoint Calc</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>
+    Redpoint Calc
+  </h1>
+  <input type="file" id="f" accept=".csv">
+  <br>
+  <br>
+  <table>
+    <tr>
+      <td>
+        <label for="recreational">Highest Recreational Climb: </label>
+      </td>
+      <td>
+        <input type="number" id="recreational">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="intermediate">Highest Intermediate Climb: </label>
+      </td>
+      <td>
+        <input type="number" id="intermediate">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="advanced">Highest Advanced Climb: </label>
+      </td>
+      <td>
+        <input type="number" id="advanced">
+      </td>
+    </tr>
+  </table>
+  <button id="submit">Submit</button>
+  <br>
+  <br>
+  <div id="output">
+  </div>
+</body>
+<script src="index.js"></script>
+<script src="papaparse.min.js"></script>
+</html>

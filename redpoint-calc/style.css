@@ -1,0 +1,15 @@
+.results {
+	border: 1px solid;
+}
+
+.gold {
+	background-color: yellow;
+}
+
+.silver {
+	background-color: gray;
+}
+
+.bronze {
+	background-color: brown;
+}
