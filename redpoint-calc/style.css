@@ -13,3 +13,7 @@
 .bronze {
 	background-color: brown;
 }
+
+.blank_row {
+	height: 30px !important;
+}

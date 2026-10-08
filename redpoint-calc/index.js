@@ -13,6 +13,8 @@ const process = () => {
   let data = Papa.parse(upload);
   // console.log(data); // check console for malformed data here
 
+  const category_names = ['RECREATIONAL', 'INTERMEDIATE', 'ADVANCED'];
+
   const thresholds = {
     RECREATIONAL: document.getElementById("recreational").value,
     INTERMEDIATE: document.getElementById("intermediate").value,
@@ -24,12 +26,11 @@ const process = () => {
     INTERMEDIATE: "ADVANCED",
   };
 
-  data = data.data // isolate rows
-    .slice(1) // remove header
-    .filter((e) => e[1].length > 0) // clear empty rows
-    .map((e) => {
-      // cast numbers
-      for (let i = 5; i < 11; i++) {
+  data = data.data                    // isolate rows
+    .slice(1)                         // remove header
+    .filter(e => e[1].length > 0)     // clear empty rows
+    .map(e => {                       // cast numbers
+      for(let i = 5; i < 11; i++){
         e[i] = Number(e[i]);
         if (isNaN(e[i])) {
           e[i] = 0;
@@ -46,11 +47,12 @@ const process = () => {
       ...e.slice(5, 10).sort((a, b) => b - a),
       ...e.slice(10),
     ])
-    .map((e) => {
-      // bump category
+    .map(e => {                       // bump category
       if (e[5] > thresholds[e[4]]) {
         e.push("bumped!");
-        e[4] = bumps[e[4]];
+        while (e[5] > thresholds[e[4]]) {
+          e[4] = category_names[category_names.indexOf(e[4]) + 1];
+        }
       }
       return e;
     });
@@ -70,14 +72,15 @@ const process = () => {
 
   const ranks = ["gold", "silver", "bronze", "no_podium"];
 
+  let current_category = "";
+  current_category += '<table class="results">';
+
   categories.forEach((c) => {
     //console.log(c);
     c.forEach((g) => {
       //console.log(g);
-      let current_category = "";
       let current_rank = 0;
       let current_best = [g[0][10], g[0][11]];
-      current_category += '<table class="results">';
       g.forEach((r) => {
         if (r[11] < current_best[1] || r[10] > current_best[0]) {
           current_best = [r[10], r[11]];
@@ -94,12 +97,14 @@ const process = () => {
         if (r.length > 12) {
           current_category += `<td class="results">${r[12]}</td>`;
         }
-        current_category += "</tr>";
+        current_category += '</tr>';
       });
-      current_category += "</table><br><br>";
-      output.innerHTML += current_category;
+      current_category += '<tr class="blank_row"></tr>';
     });
   });
+
+  current_category += "</table><br><br>";
+  output.innerHTML += current_category;
 };
 
 const comparator = (a, b) => {
