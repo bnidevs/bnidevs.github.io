@@ -13,7 +13,7 @@ const process = () => {
   let data = Papa.parse(upload);
   // console.log(data); // check console for malformed data here
 
-  const category_names = ['RECREATIONAL', 'INTERMEDIATE', 'ADVANCED'];
+  const category_names = ["RECREATIONAL", "INTERMEDIATE", "ADVANCED"];
 
   const thresholds = {
     RECREATIONAL: document.getElementById("recreational").value,
@@ -26,11 +26,12 @@ const process = () => {
     INTERMEDIATE: "ADVANCED",
   };
 
-  data = data.data                    // isolate rows
-    .slice(1)                         // remove header
-    .filter(e => e[1].length > 0)     // clear empty rows
-    .map(e => {                       // cast numbers
-      for(let i = 5; i < 11; i++){
+  data = data.data // isolate rows
+    .slice(1) // remove header
+    .filter((e) => e[1].length > 0) // clear empty rows
+    .map((e) => {
+      // cast numbers
+      for (let i = 5; i < 11; i++) {
         e[i] = Number(e[i]);
         if (isNaN(e[i])) {
           e[i] = 0;
@@ -47,7 +48,8 @@ const process = () => {
       ...e.slice(5, 10).sort((a, b) => b - a),
       ...e.slice(10),
     ])
-    .map(e => {                       // bump category
+    .map((e) => {
+      // bump category
       if (e[5] > thresholds[e[4]]) {
         e.push("bumped!");
         while (e[5] > thresholds[e[4]]) {
@@ -97,7 +99,7 @@ const process = () => {
         if (r.length > 12) {
           current_category += `<td class="results">${r[12]}</td>`;
         }
-        current_category += '</tr>';
+        current_category += "</tr>";
       });
       current_category += '<tr class="blank_row"></tr>';
     });
