@@ -13,18 +13,20 @@ const process = () => {
   let data = Papa.parse(upload);
   // console.log(data); // check console for malformed data here
 
-  data = data.data                    // isolate rows
-    .slice(1)                         // remove header
-    .filter(e => e[1].length > 0)     // clear empty rows
-    .map((e) => [                     // total tops and zones
+  data = data.data // isolate rows
+    .slice(1) // remove header
+    .filter((e) => e[1].length > 0) // clear empty rows
+    .map((e) => [
+      // total tops and zones
       ...e,
-      e.reduce((a, cv) => cv.includes('Top') ? a + 1 : a, 0), 
-      e.reduce((a, cv) => cv.includes('Zone') ? a + 1 : a, 0), 
+      e.reduce((a, cv) => (cv.includes("Top") ? a + 1 : a), 0),
+      e.reduce((a, cv) => (cv.includes("Zone") ? a + 1 : a), 0),
     ])
-    .map(e => {                       // cast numbers
-      for(let i = 5; i <= 26; i += 3){
+    .map((e) => {
+      // cast numbers
+      for (let i = 5; i <= 26; i += 3) {
         e[i] = Number(e[i]);
-        e[i+1] = Number(e[i+1]);
+        e[i + 1] = Number(e[i + 1]);
       }
       return e;
     })
@@ -48,8 +50,8 @@ const process = () => {
   data.sort(comparator);
 
   let categories = [
-    data.filter((r) => r[3] == 'MNB'),
-    data.filter((r) => r[3] == 'FNB')
+    data.filter((r) => r[3] == "MNB"),
+    data.filter((r) => r[3] == "FNB"),
   ];
 
   console.log(categories);
@@ -83,19 +85,19 @@ const process = () => {
       current_category += `<td class="results">${r[1]}</td>`;
       current_category += `<td class="results"><strong>${r[2]}</strong></td>`;
       for (let i = 4; i <= 25; i += 3) {
-        if (r[i].includes('Top')) {
-          current_category += `<td class="results">&#9608;</td>`
-        } else if (r[i].includes('Zone')) {
-          current_category += `<td class="results">&#9604;</td>`
+        if (r[i].includes("Top")) {
+          current_category += `<td class="results">&#9608;</td>`;
+        } else if (r[i].includes("Zone")) {
+          current_category += `<td class="results">&#9604;</td>`;
         } else {
-          current_category += `<td class="results"></td>`
+          current_category += `<td class="results"></td>`;
         }
       }
       current_category += `<td class="results"><strong>${r[28]}</strong></td>`;
       current_category += `<td class="results"><strong>${r[29]}</strong></td>`;
       current_category += `<td class="results">${r[30]}</td>`;
       current_category += `<td class="results">${r[31]}</td>`;
-      current_category += '</tr>';
+      current_category += "</tr>";
     });
     current_category += '<tr class="blank_row"></tr>';
   });
